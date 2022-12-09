@@ -18,6 +18,12 @@ public class User_offers {
 	private Date start_date;
 	private Date expiry_date;
 	
+	@Override
+	public String toString() {
+		return "User_offers [offer_id=" + offer_id + ", offer_desc=" + offer_desc + ", start_date=" + start_date
+				+ ", expiry_date=" + expiry_date + ", customer=" + customer + "]";
+	}
+
 	@ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;

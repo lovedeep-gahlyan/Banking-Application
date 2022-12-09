@@ -62,6 +62,12 @@ public class Customer {
 	@OneToOne(mappedBy="customer",fetch=FetchType.EAGER)
 	private Account_details account_details;
 	
+	@OneToOne(mappedBy="customer",fetch=FetchType.EAGER)
+	private Checkbook_req checkbook_req;
+	
+	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
+	private Set<User_offers> user_offers;
+	
 	
 	public int getCustomer_id() {
 		return customer_id;
