@@ -12,7 +12,7 @@ public class Query {
 		
 	@Override
 	public String toString() {
-		return "Query [query_id=" + query_id + ", query_desc=" + query_desc + ", customer_id=" + customer_id
+		return "Query [query_id=" + query_id + ", query_desc=" + query_desc 
 				+ ", query_dt=" + query_dt + ", customer=" + customer + "]";
 	}
 
@@ -21,7 +21,7 @@ public class Query {
 	
 	private String query_desc;
 	
-	private int customer_id;
+	
 	
 	private Date query_dt;
 	
@@ -45,13 +45,6 @@ public class Query {
 		this.query_desc = query_desc;
 	}
 
-	public int getCustomer_id() {
-		return customer_id;
-	}
-
-	public void setCustomer_id(int customer_id) {
-		this.customer_id = customer_id;
-	}
 
 	public Date getQuery_dt() {
 		return query_dt;

@@ -19,6 +19,13 @@ public class Credit_req {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 	
+	@Override
+	public String toString() {
+		return "Credit_req [req_id=" + req_id + ", customer=" + customer + ", pan_num=" + pan_num + ", annual_salary="
+				+ annual_salary + ", type_of_card=" + type_of_card + ", approve=" + approve + ", req_dt=" + req_dt
+				+ "]";
+	}
+
 	public String pan_num;
 	
 	public int annual_salary;
