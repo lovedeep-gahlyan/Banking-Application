@@ -15,7 +15,6 @@ public class Transactions {
 
 	private long account_num_sender;
 
-	private int customer_id;
 	private long account_num_reciever;
 	private Date transaction_dt;
 	private int transaction_amt;
@@ -41,13 +40,6 @@ public class Transactions {
 		this.account_num_sender = account_num_sender;
 	}
 
-	public int getCustomer_id() {
-		return customer_id;
-	}
-
-	public void setCustomer_id(int customer_id) {
-		this.customer_id = customer_id;
-	}
 
 	public long getAccount_num_reciever() {
 		return account_num_reciever;
@@ -68,6 +60,17 @@ public class Transactions {
 	public int getTransaction_amt() {
 		return transaction_amt;
 	}
+
+
+	@Override
+	public String toString() {
+		return "Transactions [transaction_id=" + transaction_id + ", account_num_sender=" + account_num_sender
+				+ ", account_num_reciever=" + account_num_reciever + ", transaction_dt=" + transaction_dt
+				+ ", transaction_amt=" + transaction_amt + ", closing_balance=" + closing_balance + ", customer="
+				+ customer + "]";
+	}
+
+
 
 	public void setTransaction_amt(int transaction_amt) {
 		this.transaction_amt = transaction_amt;

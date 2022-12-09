@@ -10,6 +10,12 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class Query {
 		
+	@Override
+	public String toString() {
+		return "Query [query_id=" + query_id + ", query_desc=" + query_desc + ", customer_id=" + customer_id
+				+ ", query_dt=" + query_dt + ", customer=" + customer + "]";
+	}
+
 	@Id
 	private int query_id;
 	

@@ -12,13 +12,19 @@ public class Loan_req {
 
 	@Id
 	private int req_id;
-
-	private int customer_id;
 	private String loan_type;
 	private int loan_amt;
 	private int time;
 	private boolean approve;
 	private Date req_dt;
+
+
+
+	@Override
+	public String toString() {
+		return "Loan_req [req_id=" + req_id + ", loan_type=" + loan_type + ", loan_amt=" + loan_amt + ", time=" + time
+				+ ", approve=" + approve + ", req_dt=" + req_dt + ", customer=" + customer + "]";
+	}
 
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
@@ -30,14 +36,6 @@ public class Loan_req {
 
 	public void setReq_id(int req_id) {
 		this.req_id = req_id;
-	}
-
-	public int getCustomer_id() {
-		return customer_id;
-	}
-
-	public void setCustomer_id(int customer_id) {
-		this.customer_id = customer_id;
 	}
 
 	public String getLoan_type() {
