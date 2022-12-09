@@ -20,7 +20,7 @@ public class Customer {
 	
 	private String phone;
 	
-	private String age;
+	private int age;
 	
 	private String gender;
 	
@@ -79,7 +79,7 @@ public class Customer {
 		return phone;
 	}
 
-	public String getAge() {
+	public int getAge() {
 		return age;
 	}
 
