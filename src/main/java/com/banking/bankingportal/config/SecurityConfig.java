@@ -1,6 +1,10 @@
 package com.banking.bankingportal.config;
 
+
+
 import java.util.Collections;
+
+
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,14 +16,20 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
+
+
 import jakarta.servlet.http.HttpServletRequest;
+
+
 
 @Configuration
 public class SecurityConfig {
 
-	  @Bean
-	    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-		  http.securityContext().requireExplicitSave(false)
+
+
+     @Bean
+        SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+          http.securityContext().requireExplicitSave(false)
           .and().sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
           .cors().configurationSource(new CorsConfigurationSource() {
       @Override
@@ -35,17 +45,19 @@ public class SecurityConfig {
       
           }).and().csrf().disable()
           .authorizeHttpRequests()
-          	.requestMatchers("/admin/generate-offers").hasRole("ADMIN")
+              .requestMatchers("/admin/generate-offers").hasRole("ADMIN")
                   .requestMatchers("/user","/admin").authenticated()
                   .requestMatchers("/offers","/contact","/register").permitAll()
           .and().formLogin()
           .and().httpBasic();
   return http.build();
       
-	  }
+      }
 
-	    @Bean
-	    public PasswordEncoder passwordEncoder() {
-	        return new BCryptPasswordEncoder();
-	    }
+
+
+       @Bean
+        public PasswordEncoder passwordEncoder() {
+            return new BCryptPasswordEncoder();
+        }
 }
