@@ -20,7 +20,7 @@ public class Customer {
 	
 	private String phone;
 	
-	private String age;
+	private int age;
 	
 	private String gender;
 	
@@ -79,7 +79,7 @@ public class Customer {
 		return phone;
 	}
 
-	public String getAge() {
+	public int getAge() {
 		return age;
 	}
 
@@ -125,8 +125,124 @@ public class Customer {
 				+ ", age=" + age + ", gender=" + gender + ", address=" + address + ", martial_status=" + martial_status
 				+ ", username=" + username + ", password=" + password + ", unique_identity=" + unique_identity
 				+ ", unique_identity_number=" + unique_identity_number + ", role=" + role + ", employement_status="
-				+ employement_status + "]";
+				+ employement_status + ", payee=" + payee + ", query=" + query + ", contact_query=" + contact_query
+				+ ", transactions=" + transactions + ", loan_req=" + loan_req + ", credit_req=" + credit_req
+				+ ", account_details=" + account_details + "]";
 	}
+
+	public Set<Payee> getPayee() {
+		return payee;
+	}
+
+	public void setPayee(Set<Payee> payee) {
+		this.payee = payee;
+	}
+
+	public Set<Query> getQuery() {
+		return query;
+	}
+
+	public void setQuery(Set<Query> query) {
+		this.query = query;
+	}
+
+	public Set<Contact_Query> getContact_query() {
+		return contact_query;
+	}
+
+	public void setContact_query(Set<Contact_Query> contact_query) {
+		this.contact_query = contact_query;
+	}
+
+	public Set<Transactions> getTransactions() {
+		return transactions;
+	}
+
+	public void setTransactions(Set<Transactions> transactions) {
+		this.transactions = transactions;
+	}
+
+	public Set<Loan_req> getLoan_req() {
+		return loan_req;
+	}
+
+	public void setLoan_req(Set<Loan_req> loan_req) {
+		this.loan_req = loan_req;
+	}
+
+	public Set<Credit_req> getCredit_req() {
+		return credit_req;
+	}
+
+	public void setCredit_req(Set<Credit_req> credit_req) {
+		this.credit_req = credit_req;
+	}
+
+	public Account_details getAccount_details() {
+		return account_details;
+	}
+
+	public void setAccount_details(Account_details account_details) {
+		this.account_details = account_details;
+	}
+
+	public void setCustomer_id(int customer_id) {
+		this.customer_id = customer_id;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public void setMartial_status(String martial_status) {
+		this.martial_status = martial_status;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setUnique_identity(String unique_identity) {
+		this.unique_identity = unique_identity;
+	}
+
+	public void setUnique_identity_number(long unique_identity_number) {
+		this.unique_identity_number = unique_identity_number;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public void setEmployement_status(String employement_status) {
+		this.employement_status = employement_status;
+	}
+
+
 	
 	
 
