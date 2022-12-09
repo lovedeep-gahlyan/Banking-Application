@@ -1,7 +1,11 @@
 package com.banking.bankingportal.model;
 
+import java.sql.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Loan_req {
@@ -11,13 +15,22 @@ public class Loan_req {
 
 	private int customer_id;
 	private String loan_type;
+	private int loan_amoount;
+	public int getLoan_amoount() {
+		return loan_amoount;
+	}
+
+	public void setLoan_amoount(int loan_amoount) {
+		this.loan_amoount = loan_amoount;
+	}
+
 	private int time;
 	private boolean approve;
-	private String req_dt;
+	private Date req_dt;
 
-//	@ManyToOne
-//	@JoinColumn(name = "customer_id")
-//	private Customer customer;
+	@ManyToOne
+	@JoinColumn(name = "customer_id")
+	private Customer customer;
 
 	public int getReq_id() {
 		return req_id;
@@ -59,12 +72,31 @@ public class Loan_req {
 		this.approve = approve;
 	}
 
-	public String getReq_dt() {
+	public Date getReq_dt() {
 		return req_dt;
 	}
 
-	public void setReq_dt(String req_dt) {
+	public void setReq_dt(Date req_dt) {
 		this.req_dt = req_dt;
 	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	@Override
+	public String toString() {
+		return "Loan_req [req_id=" + req_id + ", customer_id=" + customer_id + ", loan_type=" + loan_type
+				+ ", loan_amoount=" + loan_amoount + ", time=" + time + ", approve=" + approve + ", req_dt=" + req_dt
+				+ ", customer=" + customer + "]";
+	}
+
+	
+
+
 
 }
