@@ -57,29 +57,12 @@ public class Transactions {
 		this.account_num_reciever = account_num_reciever;
 	}
 
-
-	@Override
-	public String toString() {
-		return "Transactions [transaction_id=" + transaction_id + ", account_num_sender=" + account_num_sender
-				+ ", customer_id=" + customer_id + ", account_num_reciever=" + account_num_reciever
-				+ ", transaction_dt=" + transaction_dt + ", transaction_amt=" + transaction_amt + ", closing_balance="
-				+ closing_balance + ", customer=" + customer + "]";
-	}
-
 	public Date getTransaction_dt() {
 		return transaction_dt;
 	}
 
 	public void setTransaction_dt(Date transaction_dt) {
 		this.transaction_dt = transaction_dt;
-	}
-
-	public Customer getCustomer() {
-		return customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
 	}
 
 	public int getTransaction_amt() {

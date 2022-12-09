@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
 public class Customer {
@@ -48,6 +49,19 @@ public class Customer {
 	
 	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
 	private Set<Contact_Query> contact_query;
+	
+	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
+	private Set<Transactions> transactions;
+	
+	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
+	private Set<Loan_req> loan_req;
+	
+	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
+	private Set<Credit_req> credit_req;
+	
+	@OneToOne(mappedBy="customer",fetch=FetchType.EAGER)
+	private Account_details account_details;
+	
 	
 	public int getCustomer_id() {
 		return customer_id;
