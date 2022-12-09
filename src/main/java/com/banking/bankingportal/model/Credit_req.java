@@ -13,7 +13,7 @@ public class Credit_req {
 	
 	@Id
 	@GeneratedValue
-	public int req_id;
+	private int req_id;
 	
 	@ManyToOne
     @JoinColumn(name = "customer_id")
@@ -26,15 +26,15 @@ public class Credit_req {
 				+ "]";
 	}
 
-	public String pan_num;
+	private String pan_num;
 	
-	public int annual_salary;
+	private int annual_salary;
 	
-	public String type_of_card;
+	private String type_of_card;
 	
-	public boolean approve;
+	private boolean approve;
 	
-	public Date req_dt;
+	private Date req_dt;
 
 	public int getReq_id() {
 		return req_id;
