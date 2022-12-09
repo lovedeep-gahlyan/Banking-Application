@@ -15,7 +15,7 @@ public class Loan_req {
 
 	private int customer_id;
 	private String loan_type;
-	private String loan_amt;
+	private int loan_amt;
 	private int time;
 	private boolean approve;
 	private Date req_dt;
@@ -64,11 +64,11 @@ public class Loan_req {
 		this.approve = approve;
 	}
 
-	public String getLoan_amt() {
+	public int getLoan_amt() {
 		return loan_amt;
 	}
 
-	public void setLoan_amt(String loan_amt) {
+	public void setLoan_amt(int loan_amt) {
 		this.loan_amt = loan_amt;
 	}
 
