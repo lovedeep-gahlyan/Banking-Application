@@ -1,7 +1,11 @@
 package com.banking.bankingportal.model;
 
+import java.sql.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Loan_req {
@@ -11,13 +15,14 @@ public class Loan_req {
 
 	private int customer_id;
 	private String loan_type;
+	private String loan_amt;
 	private int time;
 	private boolean approve;
-	private String req_dt;
+	private Date req_dt;
 
-//	@ManyToOne
-//	@JoinColumn(name = "customer_id")
-//	private Customer customer;
+	@ManyToOne
+	@JoinColumn(name = "customer_id")
+	private Customer customer;
 
 	public int getReq_id() {
 		return req_id;
@@ -59,12 +64,30 @@ public class Loan_req {
 		this.approve = approve;
 	}
 
-	public String getReq_dt() {
+	public String getLoan_amt() {
+		return loan_amt;
+	}
+
+	public void setLoan_amt(String loan_amt) {
+		this.loan_amt = loan_amt;
+	}
+
+	public Date getReq_dt() {
 		return req_dt;
 	}
 
-	public void setReq_dt(String req_dt) {
+	public void setReq_dt(Date req_dt) {
 		this.req_dt = req_dt;
 	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	
 
 }

@@ -49,6 +49,12 @@ public class Customer {
 	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
 	private Set<Contact_Query> contact_query;
 	
+	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
+	private Set<Transactions> transactions;
+	
+	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
+	private Set<Loan_req> loan_req;
+	
 	public int getCustomer_id() {
 		return customer_id;
 	}
