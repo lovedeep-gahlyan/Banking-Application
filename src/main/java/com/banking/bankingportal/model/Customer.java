@@ -2,6 +2,8 @@ package com.banking.bankingportal.model;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -41,26 +43,37 @@ public class Customer {
 	private String employement_status;
 
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
 	private Set<Payee> payee;
 	
+
 	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
 	private Set<Query> query;
 	
+
 	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
 	private Set<Contact_Query> contact_query;
 	
+
 	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
 	private Set<Transactions> transactions;
 	
+
 	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
 	private Set<Loan_req> loan_req;
 	
+
 	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
 	private Set<Credit_req> credit_req;
 	
+	@JsonManagedReference
 	@OneToOne(mappedBy="customer",fetch=FetchType.EAGER)
 	private Account_details account_details;
+	
+	public void assignPayee(Payee payee) {
+		this.payee.add(payee);
+	}
 	
 	
 	public int getCustomer_id() {
