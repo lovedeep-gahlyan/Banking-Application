@@ -2,6 +2,8 @@ package com.banking.bankingportal.model;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -21,13 +23,15 @@ public class Query {
 	
 	private String query_desc;
 	
-	
-	
+
 	private Date query_dt;
 	
+	 @JsonBackReference
 	@ManyToOne
 	@JoinColumn(name="customer_id")
 	private Customer customer;
+	 
+	
 
 	public int getQuery_id() {
 		return query_id;
@@ -61,5 +65,7 @@ public class Query {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
+
+	
 	
 }

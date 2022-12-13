@@ -2,6 +2,8 @@ package com.banking.bankingportal.model;
 
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -44,11 +46,9 @@ public class Customer {
 	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
 	private Set<Payee> payee;
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
 	private Set<Query> query;
-	
-	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
-	private Set<Contact_Query> contact_query;
 	
 	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
 	private Set<Transactions> transactions;
@@ -67,6 +67,7 @@ public class Customer {
 	
 	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
 	private Set<User_offers> user_offers;
+	
 	
 	
 	public int getCustomer_id() {
@@ -125,19 +126,22 @@ public class Customer {
 		return employement_status;
 	}
 
+	
+
+	public Set<Payee> getPayee() {
+		return payee;
+	}
+
 	@Override
 	public String toString() {
 		return "Customer [customer_id=" + customer_id + ", name=" + name + ", email=" + email + ", phone=" + phone
 				+ ", age=" + age + ", gender=" + gender + ", address=" + address + ", martial_status=" + martial_status
 				+ ", username=" + username + ", password=" + password + ", unique_identity=" + unique_identity
 				+ ", unique_identity_number=" + unique_identity_number + ", role=" + role + ", employement_status="
-				+ employement_status + ", payee=" + payee + ", query=" + query + ", contact_query=" + contact_query
+				+ employement_status + ", payee=" + payee + ", query=" + query + ", contact_query=" 
 				+ ", transactions=" + transactions + ", loan_req=" + loan_req + ", credit_req=" + credit_req
-				+ ", account_details=" + account_details + "]";
-	}
-
-	public Set<Payee> getPayee() {
-		return payee;
+				+ ", account_details=" + account_details + ", checkbook_req=" + checkbook_req + ", user_offers="
+				+ user_offers + ", authority=" + "]";
 	}
 
 	public void setPayee(Set<Payee> payee) {
@@ -152,14 +156,7 @@ public class Customer {
 		this.query = query;
 	}
 
-	public Set<Contact_Query> getContact_query() {
-		return contact_query;
-	}
-
-	public void setContact_query(Set<Contact_Query> contact_query) {
-		this.contact_query = contact_query;
-	}
-
+	
 	public Set<Transactions> getTransactions() {
 		return transactions;
 	}
@@ -248,8 +245,5 @@ public class Customer {
 		this.employement_status = employement_status;
 	}
 
-
-	
-	
 
 }

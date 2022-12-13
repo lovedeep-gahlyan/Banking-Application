@@ -3,6 +3,7 @@ package com.banking.bankingportal.model;
 import java.sql.Date;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -10,6 +11,7 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class Contact_Query {
 	@Id
+	@GeneratedValue()
 	private int query_id;
 	
 	private String query_desc;
@@ -18,10 +20,14 @@ public class Contact_Query {
 	
 	private String phone;
 	
+	private Date query_dt;
+	
+	private String email;
+	
 	@Override
 	public String toString() {
 		return "Contact_Query [query_id=" + query_id + ", query_desc=" + query_desc + ", name=" + name + ", phone="
-				+ phone + ", query_dt=" + query_dt + ", email=" + email + ", customer=" + customer + "]";
+				+ phone + ", query_dt=" + query_dt + ", email=" + email + " ]";
 	}
 
 	public int getQuery_id() {
@@ -72,19 +78,7 @@ public class Contact_Query {
 		this.email = email;
 	}
 
-	public Customer getCustomer() {
-		return customer;
-	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
+	
 
-	private Date query_dt;
-	
-	private String email;
-	
-	@ManyToOne
-	@JoinColumn(name="customer_id")
-	private Customer customer;
 }

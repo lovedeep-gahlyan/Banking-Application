@@ -22,7 +22,6 @@ import jakarta.servlet.http.HttpServletRequest;
 public class SecurityConfig {
 
 
-
      @Bean
         SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
           http.securityContext().requireExplicitSave(false)
@@ -41,9 +40,14 @@ public class SecurityConfig {
       
           }).and().csrf().disable()
           .authorizeHttpRequests()
-              .requestMatchers("/admin/generate-offers").hasRole("ADMIN")
-                  .requestMatchers("/user","/admin").authenticated()
-                  .requestMatchers("/offers","/contact","/register").permitAll()
+ //                 .requestMatchers("/user").authenticated()
+                  .requestMatchers("/queries").anonymous()
+                  .requestMatchers("/customer/{customerId}/details/update","/admin/customers","/user","/customer/{customerId}/query").permitAll()
+                  .requestMatchers("/admin/customer/{customerId}/offers").permitAll()
+                  .requestMatchers("/admin").hasRole("ADMIN")
+                  
+ //                 .requestMatchers("/admin").permitAll()
+ //                 .requestMatchers("/offers","/contact","/register","/customer/{customerId}/query","/contactquery","/admin/contactquery").permitAll()
           .and().formLogin()
           .and().httpBasic();
   return http.build();

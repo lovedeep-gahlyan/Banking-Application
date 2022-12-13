@@ -19,6 +19,7 @@ import com.banking.bankingportal.model.Customer;
 import com.banking.bankingportal.repo.CustomerRepo;
 
 
+
 @Component
 public class BankAppUserPasswordAuthenticationProvider implements AuthenticationProvider{
 
@@ -47,6 +48,8 @@ public class BankAppUserPasswordAuthenticationProvider implements Authentication
 	            throw new BadCredentialsException("No user registered with this details!");
 	        }
 	    }
+	
+
 	    
 		@Override
 	    public boolean supports(Class<?> authentication) {
