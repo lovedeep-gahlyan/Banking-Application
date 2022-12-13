@@ -2,36 +2,51 @@ package com.banking.bankingportal.model;
 
 import java.sql.Date;
 
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 
 @Entity
-
 public class Account_details {
 	
 	@OneToOne
+	@JsonBackReference
 	@JoinColumn(name="customer_id")
 	private Customer customer;
 	
 	@Id
+	@GeneratedValue
+//	@Column(name="account_no", insertable=true, updatable=true, unique=true, nullable=false)
 	private long account_no;
+	
 	private String account_type;
 	private String branch_address;
 	private Date create_dt;
 	private int account_balance;
-	
 	@Override
 	public String toString() {
-		return "Account_details [account_type=" + account_type + ", branch_address=" + branch_address + ", create_dt="
-				+ create_dt + ", account_balance=" + account_balance + "]";
+		return "Account_details [customer=" + customer + ", account_no=" + account_no + ", account_type=" + account_type
+				+ ", branch_address=" + branch_address + ", create_dt=" + create_dt + ", account_balance="
+				+ account_balance + "]";
 	}
 	public Customer getCustomer() {
 		return customer;
 	}
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+	public long getAccount_no() {
+		return account_no;
+	}
+	public void setAccount_no(long account_no) {
+		this.account_no = account_no;
 	}
 	public String getAccount_type() {
 		return account_type;
@@ -57,6 +72,9 @@ public class Account_details {
 	public void setAccount_balance(int account_balance) {
 		this.account_balance = account_balance;
 	}
+	
+
+
 
 	
 
