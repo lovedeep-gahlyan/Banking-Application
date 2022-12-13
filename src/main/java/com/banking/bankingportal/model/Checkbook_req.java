@@ -11,7 +11,10 @@ import jakarta.persistence.OneToOne;
 public class Checkbook_req {
 	
 	@Id
+<<<<<<< HEAD
 	
+=======
+>>>>>>> 492a17beefa5eba56e6c204d40d14fac83c124c8
 	private int req_id ;
 	private int account_no;
 	private int no_of_leaf;

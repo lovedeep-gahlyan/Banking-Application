@@ -33,11 +33,17 @@
 //	        String username = authentication.getName();
 //	        String pwd = authentication.getCredentials().toString();
 //	        List<Customer> customer = customerRepo.findByUsername(username);
+<<<<<<< HEAD
 //	      
 //	        if (customer.size() > 0) {
 //	            if (passwordEncoder.matches(pwd, customer.get(0).getPassword())) {
 //	                List<GrantedAuthority> authorities = new ArrayList<>();
 //	                
+=======
+//	        if (customer.size() > 0) {
+//	            if (passwordEncoder.matches(pwd, customer.get(0).getPassword())) {
+//	                List<GrantedAuthority> authorities = new ArrayList<>();
+>>>>>>> 492a17beefa5eba56e6c204d40d14fac83c124c8
 //	                authorities.add(new SimpleGrantedAuthority(customer.get(0).getRole()));
 //	                return new UsernamePasswordAuthenticationToken(username, pwd, authorities);
 //	            } else {
