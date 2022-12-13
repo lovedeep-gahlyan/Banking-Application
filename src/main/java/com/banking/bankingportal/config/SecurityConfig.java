@@ -41,15 +41,10 @@ public class SecurityConfig {
       
           }).and().csrf().disable()
           .authorizeHttpRequests()
- //                 .requestMatchers("/user").authenticated()
-                  .requestMatchers("/queries").anonymous()
-                  .requestMatchers("/customer/{customerId}/details/update","/admin/customers","/user","/customer/{customerId}/query").permitAll()
-                  .requestMatchers("/admin/customer/{customerId}/offers").permitAll()
-                  .requestMatchers("/admin").hasRole("ADMIN")
-                  
- //                 .requestMatchers("/admin").permitAll()
- //                 .requestMatchers("/offers","/contact","/register","/customer/{customerId}/query","/contactquery","/admin/contactquery").permitAll()
-          .and().formLogin()
+                  .requestMatchers("/admin/**").hasRole("ADMIN")
+                  .requestMatchers("/customer/**").hasRole("USER")
+                  .requestMatchers("/register").permitAll()
+                  .requestMatchers("/user").authenticated()
           .and().httpBasic();
   return http.build();
       

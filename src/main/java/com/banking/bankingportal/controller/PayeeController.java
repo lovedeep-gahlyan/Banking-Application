@@ -38,7 +38,7 @@ public class PayeeController {
 	JdbcTemplate jt;
 	
 	//save method
-		@PostMapping("/save/payee/{customerId}")
+		@PostMapping("/customer/{customerId}/payee")
 		public ResponseEntity<String> saveapp(@PathVariable int customerId,@RequestBody Payee payee){
 			log.info("Entered into method with data to save");
 			ResponseEntity<String> resp =null;
@@ -67,41 +67,41 @@ public class PayeeController {
 		
 		
 		//get all method
-		@GetMapping("/getall/payee")
-		public ResponseEntity<?> getall(){
-			log.info("Entered into method to fetch data");
-			ResponseEntity<?> resp = null ;
-			try {
-				log.info("About to call fetch service");
-				List<Payee> list =payeeRepo.findAll();
-				if(list!=null && !list.isEmpty()) {
-					log.info("Data is not empty =>" +list.size());
-					resp=new ResponseEntity<List<Payee>>(list,HttpStatus.OK);
-				}
-					
-				else {
-					log.info("No record exist: size "+list.size());
-					resp = new ResponseEntity<String>(
-							"No record exists",
-							HttpStatus.OK);
-				}
-			}
-			catch (Exception e) {
-				log.error("Unable to fetch data : problem is :"+e.getMessage());
-
-				resp =  new ResponseEntity<String>(
-						"Unable to Fetch Appointments", 
-						HttpStatus.INTERNAL_SERVER_ERROR); //500
-				e.printStackTrace();
-			}
-			log.info("About to Exist fetch all method with Response");
-			return resp;
-		}
+//		@GetMapping("/getall/payee")
+//		public ResponseEntity<?> getall(){
+//			log.info("Entered into method to fetch data");
+//			ResponseEntity<?> resp = null ;
+//			try {
+//				log.info("About to call fetch service");
+//				List<Payee> list =payeeRepo.findAll();
+//				if(list!=null && !list.isEmpty()) {
+//					log.info("Data is not empty =>" +list.size());
+//					resp=new ResponseEntity<List<Payee>>(list,HttpStatus.OK);
+//				}
+//					
+//				else {
+//					log.info("No record exist: size "+list.size());
+//					resp = new ResponseEntity<String>(
+//							"No record exists",
+//							HttpStatus.OK);
+//				}
+//			}
+//			catch (Exception e) {
+//				log.error("Unable to fetch data : problem is :"+e.getMessage());
+//
+//				resp =  new ResponseEntity<String>(
+//						"Unable to Fetch Appointments", 
+//						HttpStatus.INTERNAL_SERVER_ERROR); //500
+//				e.printStackTrace();
+//			}
+//			log.info("About to Exist fetch all method with Response");
+//			return resp;
+//		}
 		
 		
 		
 		//get by customerId method
-		@GetMapping("/get/payeebycusId/{customerId}")
+		@GetMapping("/customer/{customerId}/payee")
 		public ResponseEntity<?> getbyCusid(@PathVariable int customerId){
 			log.info("Entered into method to fetch data");
 			ResponseEntity<?> resp = null ;
@@ -127,7 +127,7 @@ public class PayeeController {
 		
 		
 		//get by payeeId method
-		@GetMapping("/get/payeebyId/{payeeId}")
+		@GetMapping("/customer/payee/{payeeId}")
 		public ResponseEntity<?> getbyPayeeId(@PathVariable int payeeId){
 			log.info("Entered into method to fetch data");
 			ResponseEntity<?> resp = null ;
@@ -151,7 +151,7 @@ public class PayeeController {
 		
 		
 		//delete Payee
-		@DeleteMapping("/delete/payee/{payeeId}")
+		@DeleteMapping("/customer/payee/{payeeId}/delete")
 		public ResponseEntity<String> RemovePayee(@PathVariable int payeeId)
 		{
 			log.info("Entered into delete method");
@@ -186,7 +186,7 @@ public class PayeeController {
 		
 		
 		//update payee
-		@PatchMapping("/update/payee/{payeeId}")
+		@PatchMapping("customer/payee/{payeeId}/update")
 		public ResponseEntity<String> UpdatePayee(@PathVariable int payeeId,@RequestBody Payee payee){
 			log.info("Entered into update method");
 			ResponseEntity<String> resp = null;
@@ -236,15 +236,7 @@ public class PayeeController {
 		
 		
 		
-//		@RequestMapping(value = "/customer/{customerId}/details/update", method=RequestMethod.PATCH)
-//        public void updateCustomerDetails(@PathVariable int customerId, @RequestBody Customer customer) {
-//        String address = customer.getAddress();
-//        String phone = customer.getPhone();
-//        String email = customer.getEmail();
-//        String Update_Query = "update customer set address=?, phone=?, email=? where customer_id = ?";
-//        springJdbcTemplate.update(Update_Query,address,phone,email,customerId);
-//    }
-		
+
 		
 		
 		

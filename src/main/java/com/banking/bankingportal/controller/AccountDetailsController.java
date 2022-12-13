@@ -36,7 +36,7 @@ public class AccountDetailsController {
 	private CustomerRepo customerRepo;
 	
 	//save method
-	@PostMapping("/save/account-details/{customerId}")
+	@PostMapping("/customer/{customerId}/account-details")
 	public ResponseEntity<String> saveapp(@PathVariable int customerId,@RequestBody Account_details account_details){
 		log.info("Entered into method with data to save");
 		ResponseEntity<String> resp =null;
@@ -65,7 +65,7 @@ public class AccountDetailsController {
 	}
 	
 	//get all method
-	@GetMapping("/getall/account-details/")
+	@GetMapping("/admin/customers/account-details/")
 	public ResponseEntity<?> getall(){
 		log.info("Entered into method to fetch data");
 		ResponseEntity<?> resp = null ;
@@ -97,7 +97,7 @@ public class AccountDetailsController {
 	}
 	
 	//get by id method
-	@GetMapping("/get/account-details/{customerId}")
+	@GetMapping("/customer/{customerId}/account-details")
 	public ResponseEntity<?> getbyid(@PathVariable int customerId){
 		log.info("Entered into method to fetch data");
 		ResponseEntity<?> resp = null ;

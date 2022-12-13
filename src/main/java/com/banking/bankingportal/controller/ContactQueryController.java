@@ -20,13 +20,7 @@ public class ContactQueryController {
 	@Autowired
 	ContactQueryRepo contactQueryRepo;
 	
-	// GET - CONTACT PAGE
-	@RequestMapping(value="/contact",method=RequestMethod.GET)
-	public String showContactPage() {
-		return "Contact Us";
-	}
 	
-
 	// POST - CONTACT QUERY
 	
 	@RequestMapping(value = "/contactquery", method = RequestMethod.POST)
@@ -38,7 +32,7 @@ public class ContactQueryController {
 	
 	// GET - CONTACT (Admin)
 	
-	@RequestMapping(value = "/admin/contactquery", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/contactqueries", method = RequestMethod.GET)
 	public List<Contact_Query> showContactQuery(){
 		List<Contact_Query> query = contactQueryRepo.findAll();
 		return query;

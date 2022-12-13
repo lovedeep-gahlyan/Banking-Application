@@ -27,15 +27,9 @@ public class QueryController {
 	CustomerRepo customerRepo;
 	
 	
-	@RequestMapping(value="/admin",method=RequestMethod.GET)
-	public String getAdmin() {
-		return " Admin Page";
-	}
-
-	
 	// Get - All Query (Admin Route)
 	
-	@RequestMapping(value="/queries",method=RequestMethod.GET)
+	@RequestMapping(value="admin/queries",method=RequestMethod.GET)
 	public List<Query> getQuery() {
 		List<Query> query = queryRepo.findAll();
 		return query;
