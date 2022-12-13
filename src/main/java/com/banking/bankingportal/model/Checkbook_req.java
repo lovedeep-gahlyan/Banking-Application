@@ -2,7 +2,10 @@ package com.banking.bankingportal.model;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
@@ -11,7 +14,7 @@ import jakarta.persistence.OneToOne;
 public class Checkbook_req {
 	
 	@Id
-	
+	@GeneratedValue
 	private int req_id ;
 	private int account_no;
 	private int no_of_leaf;
@@ -20,6 +23,7 @@ public class Checkbook_req {
 	private Date req_dt;
 	
 	@OneToOne
+	@JsonBackReference
     @JoinColumn(name = "customer_id")
     private Customer customer;
 

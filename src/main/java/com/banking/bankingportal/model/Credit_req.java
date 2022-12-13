@@ -2,11 +2,14 @@ package com.banking.bankingportal.model;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+
 
 @Entity
 public class Credit_req {
@@ -15,7 +18,8 @@ public class Credit_req {
 	@GeneratedValue
 	private int req_id;
 	
-	@ManyToOne
+	@OneToOne
+	@JsonBackReference
     @JoinColumn(name = "customer_id")
     private Customer customer;
 	
