@@ -1,4 +1,3 @@
-
 package com.banking.bankingportal.config;
 
 import java.util.Collections;
@@ -57,4 +56,5 @@ public class SecurityConfig {
             return new BCryptPasswordEncoder();
         }
 }
+
 
