@@ -31,129 +31,157 @@ public class TransactionsController {
 
 	@Autowired
 	TransactionRepo TransactionRepo;
-	
+
 	@Autowired
 	AccountDetailsRepo AccountRepo;
 
 	private Logger log = LoggerFactory.getLogger(TransactionsController.class);
 
-//	@RequestMapping(path="/maketrxn")
-//	public String makeTrxn() {
-//		return "hello";
-//	}
-
 	@PostMapping(path = "/maketrxn/{customerId}")
-	public ResponseEntity<?> savetransaction(@PathVariable("customerId") int customerId,
+	public ResponseEntity<?> saveTransaction(@PathVariable("customerId") int customerId,
 			@RequestBody Transactions trxn) {
 
-		log.info("Entered into method with transaction data to save");
+		String body = null;
+
+		log.info("Entered into method 'saveTransaction' with Transaction object to save");
 
 		ResponseEntity<String> resp = null;
+
 		try {
 
 			Customer customer = CustomerRepo.findById(customerId).get();
 			
-			Account_details accrec = AccountRepo.findByCustomer(customer);
-			Account_details accsend = AccountRepo.findByCustomer(customer);
-			
-			int currentbal = accdet.getAccount_balance();
-			trxn.setClosing_balance_sender(currentbal);
-			accdet.setAccount_balance(currentbal-trxn.getTransaction_amt());
-			
-			AccountRepo.save(accdet);
-			
-			// set update of the credit cards
-			customer.addTransaction(trxn);
-			System.out.println(customer);
-			// foreign key value update
-			trxn.setCustomer(customer);
+			// Get account details of sender and receiver
+			Account_details accrec = AccountRepo.findById(trxn.getAccount_num_reciever());
+			Account_details accsend = AccountRepo.findById(trxn.getAccount_num_sender());
 
-			trxn.setTransaction_dt(new Date(System.currentTimeMillis()));
-			Transactions id = TransactionRepo.save(trxn);
+			log.debug("Created sender's and receiver's data objects");
 
-			log.info("About to call save Operation");
+			if (accsend == null) {
 
-			log.debug("saved transaction with id " + id.getTransaction_id());
+				log.error("ERROR! Customer's account details returned 'null' object");
+				return new ResponseEntity<String>("An error occured! Could not find user account", HttpStatus.OK);
+			}
 
-			String body = "Transactions details with id '" + id.getTransaction_id() + "' is saved ";
+			// Logic to update customer balance
+			int updatedBal = accsend.getAccount_balance() - trxn.getTransaction_amt();
+			if (updatedBal >= 0) {
+				trxn.setClosing_bal_sender(updatedBal);
+				accsend.setAccount_balance(updatedBal);
+				if (accrec != null) {
 
+					int updatedbal_rec = accrec.getAccount_balance() + trxn.getTransaction_amt();
+					trxn.setClosing_bal_reciever(updatedbal_rec);
+					accrec.setAccount_balance(updatedbal_rec);
+
+				} else {
+					trxn.setClosing_bal_reciever(-1);
+				}
+
+				// foreign key value update
+				trxn.setCustomer(customer);
+				
+				// Set real time date for transaction
+				trxn.setTransaction_dt(new Date(System.currentTimeMillis()));
+				
+				// SET update of current transaction in customer
+				customer.addTransaction(trxn);
+
+				// Saving details in database
+				AccountRepo.save(accsend);
+				AccountRepo.save(accrec);
+				Transactions id = TransactionRepo.save(trxn);
+				
+				log.info("Data saved in database");
+				log.debug("Saved transaction with id " + id.getTransaction_id());
+
+				body = "Transactions details with id '" + id.getTransaction_id() + "' is saved ";
+
+			} else {
+				body = "Amount insufficient for making any transaction possible";
+			}
+
+			// Creating a Response Entity object
 			resp = new ResponseEntity<String>(body, HttpStatus.CREATED); // 201
-
 			log.info("Success response constructed");
+
 		} catch (Exception e) {
-			log.error("Unable to save transaction details : problem is :" + e.getMessage());
+			
+			log.error("Unable to save transaction details! Problem is :" + e.getMessage());
 			resp = new ResponseEntity<String>("Unable to save transactions details", HttpStatus.INTERNAL_SERVER_ERROR); // 500
 			e.printStackTrace();
 		}
 
-		log.info("About to Exit save method with Response");
+		log.info("Exiting save method 'saveTransaction' ");
 		return resp;
 	}
 
-	@GetMapping(path = "/gettrxn/all/")
-	public ResponseEntity<?> getAlltransactions() {
-		log.info("Entered into method to fetch transactions details");
+	@GetMapping(path = "/gettrxn/all")
+	public ResponseEntity<?> getAllTransactions() {
+		
+		log.info("Entered into method 'getAllTransactions' to fetch all transactions details");
+		
 		ResponseEntity<?> resp = null;
+		
 		try {
-			log.info("About to call fetch transaction details service");
+			
+			log.info("Creating a list of transactions for all transactions details");
 
 			List<Transactions> list = TransactionRepo.findAll();
+			
 			if (list != null && !list.isEmpty()) {
-				log.info("Data is not empty=>" + list.size());
-//                list.sort((s1,s2)->s1.getReq_dt().compareTo(s2.getReq_dt()));
-				/*
-				 * JDK 1.8 list = list.stream()
-				 * .sorted((s1,s2)->s1.getName().compareTo(s2.getName()))
-				 * .collect(Collectors.toList());
-				 */
+				
+				log.info("Data found with size => " + list.size());
 				resp = new ResponseEntity<List<Transactions>>(list, HttpStatus.OK);
+				
 			} else {
-				log.info("No transactions  exist: size " + list.size());
-
-				resp = new ResponseEntity<>(HttpStatus.NO_CONTENT);
-				resp = new ResponseEntity<String>("No Transaction History Found", HttpStatus.OK);
+				
+				log.info("No transactions  exist! Size : " + list.size());
+				resp = new ResponseEntity<String>("No Transaction history found!", HttpStatus.OK);
 			}
 		} catch (Exception e) {
-			log.error("Unable to fetch transaction history : problem is :" + e.getMessage());
+			log.error("Unable to fetch transaction history! Problem is :" + e.getMessage());
 
 			resp = new ResponseEntity<String>("Unable to Fetch Transaction details", HttpStatus.INTERNAL_SERVER_ERROR); // 500
 			e.printStackTrace();
 		}
-		log.info("About to Exist fetch all method with Response");
+		log.info("Exiting fetch all method 'getAllTransactions'");
 		return resp;
 	}
 
-	@GetMapping(path = "/gettrxn/getbyid/{customerid}")
+	@GetMapping(path = "/getbyid/{customerid}")
 	public ResponseEntity<?> getTransactionsById(@PathVariable("customerid") int customerId) {
-		log.info("Entered into method to fetch transactions details by Id");
+		
+		log.info("Entered into method 'getTransactionsById' to fetch transactions details by Id");
+		
 		ResponseEntity<?> resp = null;
+		
 		try {
-			log.info("About to call fetch transaction details service");
+			
+			log.info("Creating a list of transaction for the customer by customer Id");
 
 			Customer customer = CustomerRepo.findById(customerId).get();
 			List<Transactions> list = TransactionRepo.findByCustomer(customer);
+			
 			if (list != null && !list.isEmpty()) {
-				log.info("Data is not empty=> " + list.size());
-//                list.sort((s1,s2)->s1.getReq_dt().compareTo(s2.getReq_dt()));
-				/*
-				 * JDK 1.8 list = list.stream()
-				 * .sorted((s1,s2)->s1.getName().compareTo(s2.getName()))
-				 * .collect(Collectors.toList());
-				 */
+				
+				log.info("Data found with size => " + list.size());
 				resp = new ResponseEntity<List<Transactions>>(list, HttpStatus.OK);
+				
 			} else {
-				log.info("No transaction history exist! : size " + list.size());
-
-				resp = new ResponseEntity<>(HttpStatus.NO_CONTENT);
+				
+				log.info("No transaction history exist! Size : " + list.size());
 				resp = new ResponseEntity<String>("No Transaction History Found", HttpStatus.OK);
+				
 			}
 		} catch (Exception e) {
-			log.error("Unable to fetch transaction history : problem is :" + e.getMessage());
+			
+			log.error("Unable to fetch transaction history! Problem is :" + e.getMessage());
 
 			resp = new ResponseEntity<String>("Unable to Fetch Transaction details", HttpStatus.INTERNAL_SERVER_ERROR); // 500
 			e.printStackTrace();
 		}
-		log.info("About to Exist fetch method with Response");
+		log.info("Exiting fetch method 'getTransactionsById'");
 		return resp;
 	}
 

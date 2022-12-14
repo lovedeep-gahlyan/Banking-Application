@@ -12,82 +12,70 @@ import jakarta.persistence.OneToOne;
 
 @Entity
 public class Customer {
-	
+
 	@Id
 	private int customer_id;
-	
+
 	private String name;
-	
+
 	private String email;
-	
+
 	private String phone;
-	
+
 	private int age;
-	
+
 	private String gender;
-	
+
 	private String address;
-	
+
 	private String martial_status;
-	
+
 	private String username;
-	
+
 	private String password;
-	
+
 	private String unique_identity;
-	
+
 	private long unique_identity_number;
-	
+
 	private String role;
-	
+
 	private String employement_status;
 
-	
 	@JsonManagedReference
-	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
 	private Set<Payee> payee;
-	
 
-	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
 	private Set<Query> query;
-	
 
-	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
 	private Set<Contact_Query> contact_query;
-	
-<<<<<<< HEAD
-	@JsonManagedReference
-=======
 
->>>>>>> 492a17beefa5eba56e6c204d40d14fac83c124c8
-	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
+	@JsonManagedReference
+	@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
 	private Set<Transactions> transactions;
-	
 
-	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
 	private Set<Loan_req> loan_req;
-	
 
-	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
+	@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
 	private Set<Credit_req> credit_req;
-	
+
 	@JsonManagedReference
-	@OneToOne(mappedBy="customer",fetch=FetchType.EAGER)
+	@OneToOne(mappedBy = "customer", fetch = FetchType.EAGER)
 	private Account_details account_details;
-	
-<<<<<<< HEAD
-	@OneToOne(mappedBy="customer",fetch=FetchType.EAGER)
+
+	@OneToOne(mappedBy = "customer", fetch = FetchType.EAGER)
 	private Checkbook_req checkbook_req;
-	
-	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
+
+	@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
 	private Set<User_offers> user_offers;
-=======
+
 	public void assignPayee(Payee payee) {
 		this.payee.add(payee);
 	}
->>>>>>> 492a17beefa5eba56e6c204d40d14fac83c124c8
-	
-	
+
 	public int getCustomer_id() {
 		return customer_id;
 	}
@@ -186,7 +174,7 @@ public class Customer {
 	public void setTransactions(Set<Transactions> transactions) {
 		this.transactions = transactions;
 	}
-	
+
 	// Adding transaction details to the existing SET of transactions
 	public void addTransaction(Transactions transaction) {
 		this.transactions.add(transaction);
@@ -194,6 +182,10 @@ public class Customer {
 
 	public Set<Loan_req> getLoan_req() {
 		return loan_req;
+	}
+
+	public void addLoan_req(Loan_req loan_req) {
+		this.loan_req.add(loan_req);
 	}
 
 	public void setLoan_req(Set<Loan_req> loan_req) {
@@ -271,9 +263,5 @@ public class Customer {
 	public void setEmployement_status(String employement_status) {
 		this.employement_status = employement_status;
 	}
-
-
-	
-	
 
 }

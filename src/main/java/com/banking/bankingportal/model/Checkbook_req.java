@@ -9,22 +9,18 @@ import jakarta.persistence.OneToOne;
 
 @Entity
 public class Checkbook_req {
-	
+
 	@Id
-<<<<<<< HEAD
-	
-=======
->>>>>>> 492a17beefa5eba56e6c204d40d14fac83c124c8
-	private int req_id ;
+	private int req_id;
 	private int account_no;
 	private int no_of_leaf;
-	
+
 	private boolean approve;
 	private Date req_dt;
-	
+
 	@OneToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+	@JoinColumn(name = "customer_id")
+	private Customer customer;
 
 	public int getReq_id() {
 		return req_id;
@@ -79,7 +75,5 @@ public class Checkbook_req {
 		return "Checkbook_req [req_id=" + req_id + ", account_no=" + account_no + ", no_of_leaf=" + no_of_leaf
 				+ ", approve=" + approve + ", req_dt=" + req_dt + ", customer=" + customer + "]";
 	}
-	
-	
-	
+
 }

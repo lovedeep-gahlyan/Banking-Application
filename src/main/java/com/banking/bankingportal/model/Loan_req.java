@@ -3,28 +3,26 @@ package com.banking.bankingportal.model;
 import java.sql.Date;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.SequenceGenerator;
 
 @Entity
+@SequenceGenerator(name = "loan", initialValue = 20000, allocationSize = 0)
 public class Loan_req {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "loan")
 	private int req_id;
+
 	private String loan_type;
 	private int loan_amt;
-	private int time;
+	private int loan_term;
 	private boolean approve;
 	private Date req_dt;
-
-
-
-	@Override
-	public String toString() {
-		return "Loan_req [req_id=" + req_id + ", loan_type=" + loan_type + ", loan_amt=" + loan_amt + ", time=" + time
-				+ ", approve=" + approve + ", req_dt=" + req_dt + ", customer=" + customer + "]";
-	}
 
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
@@ -46,12 +44,20 @@ public class Loan_req {
 		this.loan_type = loan_type;
 	}
 
-	public int getTime() {
-		return time;
+	public int getLoan_amt() {
+		return loan_amt;
 	}
 
-	public void setTime(int time) {
-		this.time = time;
+	public void setLoan_amt(int loan_amt) {
+		this.loan_amt = loan_amt;
+	}
+
+	public int getLoan_term() {
+		return loan_term;
+	}
+
+	public void setLoan_term(int loan_term) {
+		this.loan_term = loan_term;
 	}
 
 	public boolean isApprove() {
@@ -60,14 +66,6 @@ public class Loan_req {
 
 	public void setApprove(boolean approve) {
 		this.approve = approve;
-	}
-
-	public int getLoan_amt() {
-		return loan_amt;
-	}
-
-	public void setLoan_amt(int loan_amt) {
-		this.loan_amt = loan_amt;
 	}
 
 	public Date getReq_dt() {
@@ -86,6 +84,11 @@ public class Loan_req {
 		this.customer = customer;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Loan_req [req_id=" + req_id + ", loan_type=" + loan_type + ", loan_amt=" + loan_amt + ", loan_term="
+				+ loan_term + ", approve=" + approve + ", req_dt=" + req_dt + ", customer_id="
+				+ customer.getCustomer_id() + "]";
+	}
 
 }
