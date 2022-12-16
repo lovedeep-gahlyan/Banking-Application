@@ -28,7 +28,7 @@ public class Offers_controller {
 	private OffersRepo repo;
 
 	
-	@PostMapping("/save/offers")
+	@PostMapping("/admin/offers")
 	public ResponseEntity<String> saveOffer(@RequestBody Offers offer)
 	{
 		log.info("Entered into method with Offers card data to save");
@@ -61,7 +61,7 @@ public class Offers_controller {
 		return resp;
 	}
 	
-	@GetMapping(path="/all/offers")
+	@GetMapping(path="/admin/offers")
 	public ResponseEntity<?> getAllOffers() {
 		log.info("Entered into method to fetch offers data");
 		ResponseEntity<?> resp = null ;
@@ -100,7 +100,7 @@ public class Offers_controller {
 	}
 	
 	
-	@DeleteMapping("/remove/offers/{id}")
+	@DeleteMapping("/admin/offers/{id}/remove")
 	public ResponseEntity<String> removeOffer(
 			@PathVariable Integer id
 			)

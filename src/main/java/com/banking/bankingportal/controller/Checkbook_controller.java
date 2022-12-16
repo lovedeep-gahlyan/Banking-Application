@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.banking.bankingportal.model.Checkbook_req;
+import com.banking.bankingportal.model.Credit_req;
 import com.banking.bankingportal.model.Checkbook_req;
 import com.banking.bankingportal.model.Customer;
 import com.banking.bankingportal.repo.CheckbookreqRepo;
@@ -27,13 +28,13 @@ public class Checkbook_controller {
 	private Logger log = LoggerFactory.getLogger(CreditCardController.class);
 	
 	@Autowired
-	CheckbookreqRepo repo;
+	CheckbookreqRepo checkbookRepo;
 	
 	@Autowired
 	CustomerRepo custRepo;
 	
 	
-	@PostMapping("/save/checkbook/{customerId}")
+	@PostMapping("/customer/{customerId}/checkbook")
 	public ResponseEntity<?> saveCheckbook(
 			@PathVariable int customerId,
 			@RequestBody Checkbook_req checkBook)
@@ -56,7 +57,7 @@ public class Checkbook_controller {
 	      
 	         
 	         checkBook.setReq_dt(new Date(System.currentTimeMillis()));
-	         Checkbook_req id = repo.save(checkBook);
+	         Checkbook_req id = checkbookRepo.save(checkBook);
 
 			log.info("About to call save Operation");
 			
@@ -83,14 +84,14 @@ public class Checkbook_controller {
 	
 	
 	
-	@GetMapping(path="/all/check_books")
+	@GetMapping(path="/admin/check_books/requests")
 	public ResponseEntity<?> getAllCheckBook() {
 		log.info("Entered into method to fetch Check_Book data");
 		ResponseEntity<?> resp = null ;
 		try {
 
 			log.info("About to call fetch Check_Book service");
-			List<Checkbook_req> list = repo.findAll();
+			List<Checkbook_req> list = checkbookRepo.findAll();
 			if(list!=null && !list.isEmpty()) {
 				log.info("Data is not empty=>"+list.size());
 //				list.sort((s1,s2)->s1.getReq_dt().compareTo(s2.getReq_dt()));
@@ -121,36 +122,44 @@ public class Checkbook_controller {
 		return resp;
 	}
 	
-	@GetMapping("/one/checkbook/{id}")
-	public ResponseEntity<?> getOneCheckbook(
-			@PathVariable Integer id
-			) 
-	{
-		log.info("Entered into Get one Check book method");
-		ResponseEntity<?> resp = null;
-		try {
-			log.info("About to make service call to fetch one record");
-			Optional<Checkbook_req> opt =  repo.findById(id);
-			if(opt.isPresent()) {
-				log.info("Check book exist=>"+id);
-				resp = new ResponseEntity<Checkbook_req>(opt.get(), HttpStatus.OK);
-				//resp = ResponseEntity.ok(opt.get());
-			} else {
-				log.warn("Given checkbook id not exist=>"+id);
-				resp = new ResponseEntity<String>(
-						"Check book '"+id+"' not exist", 
-						HttpStatus.BAD_REQUEST);
-			}
-		} catch (Exception e) {
-			log.error("Unable to process request fetch " + e.getMessage());
-			resp = new ResponseEntity<String>(
-					"Unable to process checkbook fetch", 
-					HttpStatus.INTERNAL_SERVER_ERROR);
-			e.printStackTrace();
-		}
 
-		return resp;
+	@GetMapping("/customer/{customerId}/checkbook")
+	public Checkbook_req getCardByCustomerId(@PathVariable int customerId) {
+		Customer customer = custRepo.findById(customerId).get();
+		Checkbook_req request = checkbookRepo.findByCustomer(customer);
+		return request;
 	}
+	
+//	@GetMapping("/one/checkbook/{id}")
+//	public ResponseEntity<?> getOneCheckbook(
+//			@PathVariable Integer id
+//			) 
+//	{
+//		log.info("Entered into Get one Check book method");
+//		ResponseEntity<?> resp = null;
+//		try {
+//			log.info("About to make service call to fetch one record");
+//			Optional<Checkbook_req> opt =  repo.findById(id);
+//			if(opt.isPresent()) {
+//				log.info("Check book exist=>"+id);
+//				resp = new ResponseEntity<Checkbook_req>(opt.get(), HttpStatus.OK);
+//				//resp = ResponseEntity.ok(opt.get());
+//			} else {
+//				log.warn("Given checkbook id not exist=>"+id);
+//				resp = new ResponseEntity<String>(
+//						"Check book '"+id+"' not exist", 
+//						HttpStatus.BAD_REQUEST);
+//			}
+//		} catch (Exception e) {
+//			log.error("Unable to process request fetch " + e.getMessage());
+//			resp = new ResponseEntity<String>(
+//					"Unable to process checkbook fetch", 
+//					HttpStatus.INTERNAL_SERVER_ERROR);
+//			e.printStackTrace();
+//		}
+//
+//		return resp;
+//	}
 	
 	
 	

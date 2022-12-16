@@ -240,14 +240,14 @@ public class Customer {
         this.credit_req = credit_req;
     }
     
-    public void appendCredit_reqList(Credit_req credit) {
-    	this.credit_req.add(credit);
-    }
+//    public void appendCredit_reqList(Credit_req credit) {
+//    	this.credit_req.add(credit);
+//    }
     
     
-    public void removeCredit_reqList(Credit_req credit) {
-    	this.credit_req.remove(credit);
-    }
+//    public void removeCredit_reqList(Credit_req credit) {
+//    	this.credit_req.remove(credit);
+//    }
     
     
 

@@ -2,43 +2,40 @@ package com.banking.bankingportal.model;
 
 import java.sql.Date;
 
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 
-
 @Entity
 public class Credit_req {
-	
+
 	@Id
 	private int req_id;
-	
+
 	@OneToOne
 	@JsonBackReference
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
-	
+	@JoinColumn(name = "customer_id")
+	private Customer customer;
+
+	private String pan_num;
+
+	private int annual_salary;
+
+	private String type_of_card;
+
+	private boolean approve;
+
+	private Date req_dt;
+
 	@Override
 	public String toString() {
 		return "Credit_req [req_id=" + req_id + ", customer=" + customer + ", pan_num=" + pan_num + ", annual_salary="
 				+ annual_salary + ", type_of_card=" + type_of_card + ", approve=" + approve + ", req_dt=" + req_dt
 				+ "]";
 	}
-
-	private String pan_num;
-	
-	private int annual_salary;
-	
-	private String type_of_card;
-	
-	private boolean approve;
-	
-	private Date req_dt;
 
 	public int getReq_id() {
 		return req_id;
@@ -95,9 +92,5 @@ public class Credit_req {
 	public void setReq_dt(Date req_dt) {
 		this.req_dt = req_dt;
 	}
-	
-	
-	
-	
 
 }
