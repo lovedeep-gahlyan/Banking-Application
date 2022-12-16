@@ -2,13 +2,10 @@ package com.banking.bankingportal.model;
 
 import java.sql.Date;
 
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import jakarta.persistence.Column;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
@@ -16,13 +13,13 @@ import jakarta.persistence.OneToOne;
 @Entity
 public class Account_details {
 	
-	@OneToOne
+	@OneToOne(cascade = {CascadeType.ALL})
 	@JsonBackReference
 	@JoinColumn(name="customer_id")
 	private Customer customer;
 	
 	@Id
-	@GeneratedValue
+//	@GeneratedValue
 //	@Column(name="account_no", insertable=true, updatable=true, unique=true, nullable=false)
 	private long account_no;
 	
@@ -32,7 +29,7 @@ public class Account_details {
 	private int account_balance;
 	@Override
 	public String toString() {
-		return "Account_details [customer=" + customer + ", account_no=" + account_no + ", account_type=" + account_type
+		return "Account_details [customer_id=" + customer.getCustomer_id() + ", account_no=" + account_no + ", account_type=" + account_type
 				+ ", branch_address=" + branch_address + ", create_dt=" + create_dt + ", account_balance="
 				+ account_balance + "]";
 	}
