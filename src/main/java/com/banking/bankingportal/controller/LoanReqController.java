@@ -12,17 +12,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+
 import org.springframework.web.bind.annotation.RestController;
 
 import com.banking.bankingportal.model.Customer;
 import com.banking.bankingportal.model.Loan_req;
-import com.banking.bankingportal.model.Transactions;
+
 import com.banking.bankingportal.repo.CustomerRepo;
 import com.banking.bankingportal.repo.LoanReqRepo;
 
 @RestController
-@RequestMapping("/loan")
 public class LoanReqController {
 
 	@Autowired
@@ -33,7 +32,7 @@ public class LoanReqController {
 
 	Logger log = LoggerFactory.getLogger(LoanReqController.class);
 
-	@PostMapping("/req/{customerid}")
+	@PostMapping("customer/{customerid}/loan/request")
 	public ResponseEntity<?> setLoanReq(@PathVariable("customerid") int customerid, @RequestBody Loan_req loanReq) {
 
 		log.info("Entered into method 'setLoanReq' to add Loan Requests ");
@@ -49,7 +48,8 @@ public class LoanReqController {
 			loanReq.setApprove(false);
 			Date now = new Date(System.currentTimeMillis());
 			loanReq.setReq_dt(now);
-			customer.addLoan_req(loanReq);
+			
+			//customer.addLoan_req(loanReq);
 			
 			Loan_req reqId = LoanRepo.save(loanReq);
 
@@ -69,7 +69,7 @@ public class LoanReqController {
 		return resp;
 	}
 
-	@GetMapping("/get/all")
+	@GetMapping("admin/loan/requests")
 	public ResponseEntity<?> getAllRequests() {
 
 		log.info("Entered into method 'getAllRequests' to fetch all loan requests");
@@ -99,7 +99,7 @@ public class LoanReqController {
 		return resp;
 	}
 	
-	@GetMapping(path = "/getbyid/{customerid}")
+	@GetMapping(path = "customer/{customerid}/loan/request")
 	public ResponseEntity<?> getLoanReqById(@PathVariable("customerid") int customerId) {
 		
 		log.info("Entered into method 'getLoanReqById' to fetch loan requests by customer Id");

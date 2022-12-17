@@ -34,7 +34,7 @@ public class Checkbook_controller {
 	CustomerRepo custRepo;
 	
 	
-	@PostMapping("/customer/{customerId}/checkbook")
+	@PostMapping("/customer/{customerId}/checkbook/request")
 	public ResponseEntity<?> saveCheckbook(
 			@PathVariable int customerId,
 			@RequestBody Checkbook_req checkBook)

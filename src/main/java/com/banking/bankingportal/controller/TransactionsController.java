@@ -23,7 +23,6 @@ import com.banking.bankingportal.repo.CustomerRepo;
 import com.banking.bankingportal.repo.TransactionRepo;
 
 @RestController
-@RequestMapping("/trxn")
 public class TransactionsController {
 
 	@Autowired
@@ -37,7 +36,7 @@ public class TransactionsController {
 
 	private Logger log = LoggerFactory.getLogger(TransactionsController.class);
 
-	@PostMapping(path = "/maketrxn/{customerId}")
+	@PostMapping(path = "/customer/{customerId}/payment")
 	public ResponseEntity<?> saveTransaction(@PathVariable("customerId") int customerId,
 			@RequestBody Transactions trxn) {
 
@@ -85,7 +84,7 @@ public class TransactionsController {
 				trxn.setTransaction_dt(new Date(System.currentTimeMillis()));
 				
 				// SET update of current transaction in customer
-				customer.addTransaction(trxn);
+				//customer.addTransaction(trxn);
 
 				// Saving details in database
 				AccountRepo.save(accsend);
@@ -116,7 +115,7 @@ public class TransactionsController {
 		return resp;
 	}
 
-	@GetMapping(path = "/gettrxn/all")
+	@GetMapping(path = "admin/transactions")
 	public ResponseEntity<?> getAllTransactions() {
 		
 		log.info("Entered into method 'getAllTransactions' to fetch all transactions details");
@@ -149,7 +148,7 @@ public class TransactionsController {
 		return resp;
 	}
 
-	@GetMapping(path = "/getbyid/{customerid}")
+	@GetMapping(path = "customer/{customerid}/transaction")
 	public ResponseEntity<?> getTransactionsById(@PathVariable("customerid") int customerId) {
 		
 		log.info("Entered into method 'getTransactionsById' to fetch transactions details by Id");
