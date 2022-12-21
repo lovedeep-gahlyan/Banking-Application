@@ -5,6 +5,7 @@ import java.sql.Date;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -19,6 +20,7 @@ public class Query {
 	}
 
 	@Id
+	@GeneratedValue
 	private int query_id;
 	
 	private String query_desc;

@@ -11,7 +11,7 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class Contact_Query {
 	@Id
-	@GeneratedValue()
+	@GeneratedValue
 	private int query_id;
 	
 	private String query_desc;

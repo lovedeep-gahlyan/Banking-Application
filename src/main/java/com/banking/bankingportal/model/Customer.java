@@ -58,11 +58,11 @@ public class Customer {
 	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
 	private Set<Query> query;
 	
-	
+	@JsonManagedReference
 	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
 	private Set<Transactions> transactions;
 	
-
+	@JsonManagedReference
 	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
 	private Set<Loan_req> loan_req;
 	
@@ -74,11 +74,12 @@ public class Customer {
     @OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
     private Set<Checkbook_req> checkbook_req;
     
+
 	@JsonManagedReference
 	@OneToOne(mappedBy="customer",fetch=FetchType.EAGER)
 	private Account_details account_details;
 	
-	
+	@JsonManagedReference
 	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
 	private Set<User_offers> user_offers;
 	

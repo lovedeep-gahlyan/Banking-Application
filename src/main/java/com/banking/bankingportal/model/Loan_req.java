@@ -2,6 +2,8 @@ package com.banking.bankingportal.model;
 
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,7 +17,7 @@ import jakarta.persistence.SequenceGenerator;
 public class Loan_req {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "loan")
+	@GeneratedValue
 	private int req_id;
 
 	private String loan_type;
@@ -26,6 +28,7 @@ public class Loan_req {
 
 	@ManyToOne
 	@JoinColumn(name = "customer_id")
+	@JsonBackReference
 	private Customer customer;
 
 	public int getReq_id() {

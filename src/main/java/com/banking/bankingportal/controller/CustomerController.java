@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.banking.bankingportal.model.Account_details;
 import com.banking.bankingportal.model.Customer;
 import com.banking.bankingportal.repo.CustomerRepo;
 
@@ -79,12 +81,14 @@ public class CustomerController {
 			 springJdbcTemplate.update(Update_Query,address,phone,email,customerId);
 		 }
 		 
-		 // Show All Customer ( Admin )
 		 
-		 @RequestMapping(value="/admin/customers",method=RequestMethod.GET)
-		 public List<Customer> getAllCustomers(){
+		 // Show All Customer ( Admin )
+		 @GetMapping("/admin/customers")
+		 public ResponseEntity<?> getAllCustomers(){
+			 ResponseEntity<?> resp = null ;
 			 List<Customer> customers = (List<Customer>) customerRepo.findAll();
-			 return customers;
+			 resp=new ResponseEntity<List<Customer>>(customers,HttpStatus.OK); 
+			 return resp;
 		 }
 		 
 }

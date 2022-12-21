@@ -40,7 +40,7 @@ public class SecurityConfig {
       
           }).and().csrf().disable()
           .authorizeHttpRequests()
-                  .requestMatchers("/admin/**").hasRole("ADMIN")
+                  .requestMatchers("/admin/**").permitAll()
                   .requestMatchers("/customer/**").hasRole("USER")
                   .requestMatchers("/register").permitAll()
                   .requestMatchers("/user").authenticated()
