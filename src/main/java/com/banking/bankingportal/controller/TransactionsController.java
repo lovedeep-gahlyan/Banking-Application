@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +24,7 @@ import com.banking.bankingportal.repo.CustomerRepo;
 import com.banking.bankingportal.repo.TransactionRepo;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 public class TransactionsController {
 
 	@Autowired
@@ -47,9 +49,11 @@ public class TransactionsController {
 		ResponseEntity<String> resp = null;
 
 		try {
-
+			
+			System.out.println(customerId);
 			Customer customer = CustomerRepo.findById(customerId).get();
 			
+			System.out.println(trxn.toString());
 			// Get account details of sender and receiver
 			Account_details accrec = AccountRepo.findById(trxn.getAccount_num_reciever());
 			Account_details accsend = AccountRepo.findById(trxn.getAccount_num_sender());
@@ -68,10 +72,12 @@ public class TransactionsController {
 				trxn.setClosing_bal_sender(updatedBal);
 				accsend.setAccount_balance(updatedBal);
 				if (accrec != null) {
-
+					
 					int updatedbal_rec = accrec.getAccount_balance() + trxn.getTransaction_amt();
 					trxn.setClosing_bal_reciever(updatedbal_rec);
 					accrec.setAccount_balance(updatedbal_rec);
+					
+					AccountRepo.save(accrec);
 
 				} else {
 					trxn.setClosing_bal_reciever(-1);
@@ -79,7 +85,6 @@ public class TransactionsController {
 
 				// foreign key value update
 				trxn.setCustomer(customer);
-				
 				// Set real time date for transaction
 				trxn.setTransaction_dt(new Date(System.currentTimeMillis()));
 				
@@ -88,7 +93,6 @@ public class TransactionsController {
 
 				// Saving details in database
 				AccountRepo.save(accsend);
-				AccountRepo.save(accrec);
 				Transactions id = TransactionRepo.save(trxn);
 				
 				log.info("Data saved in database");

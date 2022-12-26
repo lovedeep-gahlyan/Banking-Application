@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import org.springframework.security.core.Authentication;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,8 +29,8 @@ public class CustomerController {
 		@Autowired
 		private CustomerRepo customerRepo;
 		
-		@Autowired
-		private PasswordEncoder passwordEncoder;		
+//		@Autowired
+//		private PasswordEncoder passwordEncoder;		
 		@Autowired
 		private JdbcTemplate springJdbcTemplate;
 	
@@ -41,8 +41,8 @@ public class CustomerController {
 	        Customer savedCustomer = null;
 	        ResponseEntity<String> response = null;
 	        try {
-	            String hashPwd = passwordEncoder.encode(customer.getPassword());
-	            customer.setPassword(hashPwd);
+//	            String hashPwd = passwordEncoder.encode(customer.getPassword());
+//	            customer.setPassword(hashPwd);
 	            savedCustomer = customerRepo.save(customer);
 	            if (savedCustomer.getCustomer_id() > 0) {
 	                response = ResponseEntity
@@ -57,18 +57,17 @@ public class CustomerController {
 	        return response;
 	    }
 		
-		// Get Customer after Auth
-		
-		 @RequestMapping("/user")
-		    public Customer getUserDetailsAfterLogin(Authentication authentication) {
-		        List<Customer> customers = customerRepo.findByUsername(authentication.getName());
-		        if (customers.size() > 0) {
-		            return customers.get(0);
-		        } else {
-		            return null;
-		        }
-
-		    }
+//		// Get Customer after Auth
+//		 @RequestMapping("/user")
+//		    public Customer getUserDetailsAfterLogin(Authentication authentication) {
+//		        List<Customer> customers = customerRepo.findByUsername(authentication.getName());
+//		        if (customers.size() > 0) {
+//		            return customers.get(0);
+//		        } else {
+//		            return null;
+//		        }
+//
+//		    }
 		 
 		 // Updating Customer Details
 		 

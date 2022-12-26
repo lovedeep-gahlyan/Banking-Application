@@ -105,11 +105,13 @@ public class Transactions {
 		this.customer = customer;
 	}
 
+	// customer.getCustomer_id()
+	
 	@Override
 	public String toString() {
 		return "Transactions [transaction_id=" + transaction_id + ", account_num_sender=" + account_num_sender
-				+ ", account_num_reciever=" + account_num_reciever + ", customer_id=" + customer.getCustomer_id()
-				+ ", transaction_dt=" + transaction_dt + ", transaction_amt=" + transaction_amt
+				+ ", account_num_reciever=" + account_num_reciever + ", customer_id=" + 
+				 ", transaction_dt=" + transaction_dt + ", transaction_amt=" + transaction_amt
 				+ ", closing_bal_sender=" + closing_bal_sender + ", closing_bal_reciever=" + closing_bal_reciever
 				+ ", trxnDescription=" + trxnDescription + "]";
 	}
