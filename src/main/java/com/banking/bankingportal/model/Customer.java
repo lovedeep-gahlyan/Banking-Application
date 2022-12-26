@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -20,6 +21,7 @@ import jakarta.persistence.OneToOne;
 public class Customer {
     
     @Id
+    @GeneratedValue
     private int customer_id;
     
     private String name;

@@ -24,6 +24,7 @@ public class Payee {
 	private long payee_account_no;
 	private String email;
 	private String phone;
+	private String bank_name;
 	
 	public Customer getCustomer() {
 		return customer;
@@ -61,11 +62,18 @@ public class Payee {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
+	public String getBank_name() {
+		return bank_name;
+	}
+	public void setBank_name(String bank_name) {
+		this.bank_name = bank_name;
+	}
 	@Override
 	public String toString() {
-		return "Payee [payee_id=" + payee_id + ", name=" + name + ", payee_account_no=" + payee_account_no + ", email="
-				+ email + ", phone=" + phone + "]";
+		return "Payee [customer=" + customer + ", payee_id=" + payee_id + ", name=" + name + ", payee_account_no="
+				+ payee_account_no + ", email=" + email + ", phone=" + phone + ", bank_name=" + bank_name + "]";
 	}
+	
 
 	
 

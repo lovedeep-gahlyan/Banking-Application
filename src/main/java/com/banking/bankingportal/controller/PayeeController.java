@@ -200,9 +200,10 @@ public class PayeeController {
 					String name=payee.getName();
 					String email=payee.getEmail();
 					long payee_account_no=payee.getPayee_account_no();
+					String bank_name=payee.getBank_name();
 					String phone=payee.getPhone();
-					String Update_Query = "update payee set name=?, phone=?, email=?, payee_account_no=? where payee_id = ?";
-					jt.update(Update_Query,name,phone,email,payee_account_no,payeeId);
+					String Update_Query = "update payee set name=?, phone=?, email=?, payee_account_no=?,bank_name=? where payee_id = ?";
+					jt.update(Update_Query,name,phone,email,payee_account_no,bank_name,payeeId);
 					
 					log.info("Payee exist with given id and updated=>"+payeeId);
 					resp = new ResponseEntity<String>(

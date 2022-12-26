@@ -26,6 +26,7 @@ import com.banking.bankingportal.repo.CustomerRepo;
 
 
 @RestController
+@CrossOrigin(origins="http://localhost:4200")
 public class AccountDetailsController {
 	private Logger log=LoggerFactory.getLogger(AccountDetailsController.class);
 	
