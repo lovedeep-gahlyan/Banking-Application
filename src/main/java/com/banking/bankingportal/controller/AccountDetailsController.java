@@ -23,24 +23,22 @@ import com.banking.bankingportal.model.Customer;
 import com.banking.bankingportal.repo.AccountDetailsRepo;
 import com.banking.bankingportal.repo.CustomerRepo;
 
-
-
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class AccountDetailsController {
-	private Logger log=LoggerFactory.getLogger(AccountDetailsController.class);
-	
+	private Logger log = LoggerFactory.getLogger(AccountDetailsController.class);
+
 	@Autowired
 	private AccountDetailsRepo accountDetailsRepo;
-	
+
 	@Autowired
 	private CustomerRepo customerRepo;
-	
-	//save method
-	@PostMapping("/customer/{customerId}/account-details")
-	public ResponseEntity<String> saveapp(@PathVariable int customerId,@RequestBody Account_details account_details){
+
+	// save method
+	@PostMapping("/register/customer/{customerId}/account-details")
+	public ResponseEntity<String> saveapp(@PathVariable int customerId, @RequestBody Account_details account_details) {
 		log.info("Entered into method with data to save");
-		ResponseEntity<String> resp =null;
+		ResponseEntity<String> resp = null;
 		try {
 			Customer customer = customerRepo.findById(customerId).get();
 			customer.setAccount_details(account_details);
@@ -48,85 +46,65 @@ public class AccountDetailsController {
 			account_details.setCreate_dt(new Date(System.currentTimeMillis()));
 			accountDetailsRepo.save(account_details);
 			log.info("saved");
-			String body="Row inserted";
-			resp=new ResponseEntity<String>(body,HttpStatus.CREATED);
+			String body = "Row inserted";
+			resp = new ResponseEntity<String>(body, HttpStatus.CREATED);
 			log.info("Response created successfully");
-			
-		}
-		catch (Exception e) {
-			log.error("Unable to save :"+e.getMessage());
-			resp =  new ResponseEntity<String>(
-					"Unable to Save", 
-					HttpStatus.INTERNAL_SERVER_ERROR); //500
+
+		} catch (Exception e) {
+			log.error("Unable to save :" + e.getMessage());
+			resp = new ResponseEntity<String>("Unable to Save", HttpStatus.INTERNAL_SERVER_ERROR); // 500
 			e.printStackTrace();
 		}
 
 		log.info("About to Exit save method with Response");
 		return resp;
 	}
-	
-	//get all method
+
+	// get all method
 	@GetMapping("/admin/customers/account-details/")
-	public ResponseEntity<?> getall(){
+	public ResponseEntity<?> getall() {
 		log.info("Entered into method to fetch data");
-		ResponseEntity<?> resp = null ;
+		ResponseEntity<?> resp = null;
 		try {
 			log.info("About to call fetch service");
-			List<Account_details> list =accountDetailsRepo.findAll();
-			if(list!=null && !list.isEmpty()) {
-				log.info("Data is not empty =>" +list.size());
-				resp=new ResponseEntity<List<Account_details>>(list,HttpStatus.OK);
+			List<Account_details> list = accountDetailsRepo.findAll();
+			if (list != null && !list.isEmpty()) {
+				log.info("Data is not empty =>" + list.size());
+				resp = new ResponseEntity<List<Account_details>>(list, HttpStatus.OK);
 			}
-				
-			else {
-				log.info("No record exist: size "+list.size());
-				resp = new ResponseEntity<String>(
-						"No record exists",
-						HttpStatus.OK);
-			}
-		}
-		catch (Exception e) {
-			log.error("Unable to fetch data : problem is :"+e.getMessage());
 
-			resp =  new ResponseEntity<String>(
-					"Unable to Fetch Appointments", 
-					HttpStatus.INTERNAL_SERVER_ERROR); //500
+			else {
+				log.info("No record exist: size " + list.size());
+				resp = new ResponseEntity<String>("No record exists", HttpStatus.OK);
+			}
+		} catch (Exception e) {
+			log.error("Unable to fetch data : problem is :" + e.getMessage());
+
+			resp = new ResponseEntity<String>("Unable to Fetch Appointments", HttpStatus.INTERNAL_SERVER_ERROR); // 500
 			e.printStackTrace();
 		}
 		log.info("About to Exist fetch all method with Response");
 		return resp;
 	}
-	
-	//get by id method
+
+	// get by id method
 	@GetMapping("/customer/{customerId}/account-details")
-	public ResponseEntity<?> getbyid(@PathVariable int customerId){
+	public ResponseEntity<?> getbyid(@PathVariable int customerId) {
 		log.info("Entered into method to fetch data");
-		ResponseEntity<?> resp = null ;
+		ResponseEntity<?> resp = null;
 		try {
 			log.info("About to call fetch service");
 			Customer customer = customerRepo.findById(customerId).get();
-			Account_details accountDetails=accountDetailsRepo.findByCustomer(customer);
-			resp=new ResponseEntity<Account_details>(accountDetails,HttpStatus.OK);
-		}
-		catch (Exception e) {
-			log.error("Unable to fetch data : problem is :"+e.getMessage());
+			Account_details accountDetails = accountDetailsRepo.findByCustomer(customer);
+			resp = new ResponseEntity<Account_details>(accountDetails, HttpStatus.OK);
+		} catch (Exception e) {
+			log.error("Unable to fetch data : problem is :" + e.getMessage());
 
-			resp =  new ResponseEntity<String>(
-					"Unable to Fetch", 
-					HttpStatus.INTERNAL_SERVER_ERROR); //500
+			resp = new ResponseEntity<String>("Unable to Fetch", HttpStatus.INTERNAL_SERVER_ERROR); // 500
 			e.printStackTrace();
 		}
 		log.info("About to Exit fetch one method with Response");
 		return resp;
 	}
-	
-	
-	
-	
-	
-	
-
-	
-	
 
 }
