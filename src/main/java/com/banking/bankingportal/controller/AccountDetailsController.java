@@ -37,7 +37,7 @@ public class AccountDetailsController {
 	private CustomerRepo customerRepo;
 	
 	//save method
-	@PostMapping("/customer/{customerId}/account-details")
+	@PostMapping("/register/customer/{customerId}/account-details")
 	public ResponseEntity<String> saveapp(@PathVariable int customerId,@RequestBody Account_details account_details){
 		log.info("Entered into method with data to save");
 		ResponseEntity<String> resp =null;
