@@ -18,11 +18,10 @@ import jakarta.persistence.SequenceGenerator;
  
 
 @Entity
-@SequenceGenerator(name = "Customer", initialValue = 1000, allocationSize = 0)
 public class Customer {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "Customer")
+    @GeneratedValue
     private int customer_id;
     
     private String name;

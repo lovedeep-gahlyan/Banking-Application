@@ -27,6 +27,17 @@ public class Query {
 	
 
 	private Date query_dt;
+
+
+	public String getUserName() {
+		return username;
+	}
+
+	public void setUserName(String username) {
+		this.username = username;
+	}
+
+	private String username;
 	
 	 @JsonBackReference
 	@ManyToOne

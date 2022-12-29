@@ -44,6 +44,7 @@ public class QueryController {
 		Customer customer = customerRepo.findById(customerId).get();
 		query.setCustomer(customer);
 		query.setQuery_dt(new Date(System.currentTimeMillis()));
+		query.setUserName(customer.getUsername());
 		queryRepo.save(query);
 		return ResponseEntity.created(null).build();
 
