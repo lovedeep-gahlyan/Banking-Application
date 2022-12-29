@@ -41,12 +41,13 @@ public class SecurityConfig {
           return config;
       }
       
-          }).and().csrf().ignoringRequestMatchers("/contact","/register/**").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+          }).and().csrf().ignoringRequestMatchers("/contact","/register/**","/register").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
           .and().addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
           .authorizeHttpRequests()
                   .requestMatchers("/admin/**").hasRole("ADMIN")
                   .requestMatchers("/customer/**").hasRole("USER")
                   .requestMatchers("/register/**").permitAll()
+                  .requestMatchers("/register").permitAll()
                   .requestMatchers("/user").authenticated()
           .and().httpBasic();
   return http.build();
