@@ -41,7 +41,7 @@ public class SecurityConfig {
           return config;
       }
       
-          }).and().csrf().ignoringRequestMatchers("/contact","/register/**","/register").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+          }).and().csrf().ignoringRequestMatchers("/contact","/register/**","/customer/**","/admin/**").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
           .and().addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
           .authorizeHttpRequests()
                   .requestMatchers("/admin/**").hasRole("ADMIN")
