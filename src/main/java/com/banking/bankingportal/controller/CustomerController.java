@@ -2,6 +2,9 @@ package com.banking.bankingportal.controller;
 
 import java.util.List;
 
+
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.banking.bankingportal.model.Account_details;
+
 import com.banking.bankingportal.model.Customer;
 import com.banking.bankingportal.repo.CustomerRepo;
 
@@ -38,48 +41,29 @@ public class CustomerController {
 	
 		// Registering Customer
 		
-//		@PostMapping("/register")
-//		public ResponseEntity<String> registerUser(@RequestBody Customer customer) {
-//	        Customer savedCustomer = null;
-//	        ResponseEntity<String> response = null;
-//	        try {
-//	            String hashPwd = passwordEncoder.encode(customer.getPassword());
-//	            customer.setPassword(hashPwd);
-//	            savedCustomer = customerRepo.save(customer);
-//	            if (savedCustomer.getCustomer_id() > 0) {
-//	                response = ResponseEntity
-//	                        .status(HttpStatus.CREATED)
-//	                        .body("Given user details are successfully registered");
-//	            }
-//	        } catch (Exception ex) {
-//	            response = ResponseEntity
-//	                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-//	                    .body("An exception occured due to " + ex.getMessage());
-//	        }
-//	        return response;
-//	    }
-		  @PostMapping("/register")
-	        public ResponseEntity<?> registerUser(@RequestBody Customer customer) {
-	            Customer savedCustomer = null;
-	            ResponseEntity<?> response = null;
-	            try {
-	                String hashPwd = passwordEncoder.encode(customer.getPassword());
-	                customer.setPassword(hashPwd);
-	                savedCustomer = customerRepo.save(customer);
-	                if (savedCustomer.getCustomer_id() > 0) {
-	                    int id=savedCustomer.getCustomer_id();
-	                    response = new ResponseEntity<Integer>(id,HttpStatus.CREATED);
 
-	 
+@PostMapping("/register")
+public ResponseEntity<?> registerUser(@RequestBody Customer customer) {
+    Customer savedCustomer = null;
+    ResponseEntity<?> response = null;
+    try {
+        String hashPwd = passwordEncoder.encode(customer.getPassword());
+        customer.setPassword(hashPwd);
+        savedCustomer = customerRepo.save(customer);
+        if (savedCustomer.getCustomer_id() > 0) {
+            int id=savedCustomer.getCustomer_id();
+            response = new ResponseEntity<Integer>(id,HttpStatus.CREATED);
 
-	                }
-	            } catch (Exception ex) {
-	                response = ResponseEntity
-	                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-	                        .body("An exception occured due to " + ex.getMessage());
-	            }
-	            return response;
-	        }
+
+
+        }
+    } catch (Exception ex) {
+        response = ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("An exception occured due to " + ex.getMessage());
+    }
+    return response;
+}
 		
 		// Get Customer after Auth
 		
@@ -98,12 +82,26 @@ public class CustomerController {
 		 // Updating Customer Details
 		 
 		 @RequestMapping(value = "/customer/{customerId}/details/update", method=RequestMethod.PATCH)
-		 	public void updateCustomerDetails(@PathVariable int customerId, @RequestBody Customer customer) {
+		 	public ResponseEntity<?> updateCustomerDetails(@PathVariable int customerId, @RequestBody Customer customer) {
+			 ResponseEntity<String> resp = null;
+			 try {
 			 String address = customer.getAddress();
 			 String phone = customer.getPhone();
 			 String email = customer.getEmail();
 			 String Update_Query = "update customer set address=?, phone=?, email=? where customer_id = ?";
 			 springJdbcTemplate.update(Update_Query,address,phone,email,customerId);
+			 resp=new ResponseEntity<String>("User Account details saved",HttpStatus.OK);
+			 }
+			 catch (Exception e) {
+
+					resp = new ResponseEntity<String>(
+							"Unable to update", 
+							HttpStatus.INTERNAL_SERVER_ERROR);
+					e.printStackTrace();
+				}
+				
+				return resp;
+			 
 		 }
 		 
 		 

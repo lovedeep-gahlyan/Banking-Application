@@ -14,6 +14,7 @@ import jakarta.persistence.OneToOne;
 public class Checkbook_req {
 	
 	@Id
+	@GeneratedValue
 	private int req_id ;
 	private int account_no;
 	private int no_of_leaf;
