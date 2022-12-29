@@ -38,31 +38,54 @@ public class CustomerController {
 	
 		// Registering Customer
 		
-		@PostMapping("/register")
-		public ResponseEntity<String> registerUser(@RequestBody Customer customer) {
-	        Customer savedCustomer = null;
-	        ResponseEntity<String> response = null;
-	        try {
-	            String hashPwd = passwordEncoder.encode(customer.getPassword());
-	            customer.setPassword(hashPwd);
-	            savedCustomer = customerRepo.save(customer);
-	            if (savedCustomer.getCustomer_id() > 0) {
+//		@PostMapping("/register")
+//		public ResponseEntity<String> registerUser(@RequestBody Customer customer) {
+//	        Customer savedCustomer = null;
+//	        ResponseEntity<String> response = null;
+//	        try {
+//	            String hashPwd = passwordEncoder.encode(customer.getPassword());
+//	            customer.setPassword(hashPwd);
+//	            savedCustomer = customerRepo.save(customer);
+//	            if (savedCustomer.getCustomer_id() > 0) {
+//	                response = ResponseEntity
+//	                        .status(HttpStatus.CREATED)
+//	                        .body("Given user details are successfully registered");
+//	            }
+//	        } catch (Exception ex) {
+//	            response = ResponseEntity
+//	                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+//	                    .body("An exception occured due to " + ex.getMessage());
+//	        }
+//	        return response;
+//	    }
+		  @PostMapping("/register")
+	        public ResponseEntity<?> registerUser(@RequestBody Customer customer) {
+	            Customer savedCustomer = null;
+	            ResponseEntity<?> response = null;
+	            try {
+	                String hashPwd = passwordEncoder.encode(customer.getPassword());
+	                customer.setPassword(hashPwd);
+	                savedCustomer = customerRepo.save(customer);
+	                if (savedCustomer.getCustomer_id() > 0) {
+	                    int id=savedCustomer.getCustomer_id();
+	                    response = new ResponseEntity<Integer>(id,HttpStatus.CREATED);
+
+	 
+
+	                }
+	            } catch (Exception ex) {
 	                response = ResponseEntity
-	                        .status(HttpStatus.CREATED)
-	                        .body("Given user details are successfully registered");
+	                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                        .body("An exception occured due to " + ex.getMessage());
 	            }
-	        } catch (Exception ex) {
-	            response = ResponseEntity
-	                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-	                    .body("An exception occured due to " + ex.getMessage());
+	            return response;
 	        }
-	        return response;
-	    }
 		
 		// Get Customer after Auth
 		
 		 @RequestMapping("/user")
 		    public Customer getUserDetailsAfterLogin(Authentication authentication) {
+			 System.out.println(authentication);
 		        List<Customer> customers = customerRepo.findByUsername(authentication.getName());
 		        if (customers.size() > 0) {
 		            return customers.get(0);

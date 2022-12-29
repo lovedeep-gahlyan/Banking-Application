@@ -40,13 +40,12 @@ public class SecurityConfig {
          return config;
      }
       
-          }).and().csrf().ignoringRequestMatchers("/contactquery","/register").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+          }).and().csrf().ignoringRequestMatchers("/contactquery","/register","/customer/**").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
           .and().addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
-          
           .authorizeHttpRequests()
-          .requestMatchers("/user").authenticated()
                   .requestMatchers("/admin/**").hasRole("ADMIN")
                   .requestMatchers("/customer/**").hasRole("USER")
+                  .requestMatchers("/user").authenticated()
                   .requestMatchers("/register","/contactquery").permitAll()
                   .and().formLogin()
           .and().httpBasic();
