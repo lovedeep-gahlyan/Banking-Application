@@ -47,6 +47,7 @@ public class SecurityConfig {
                   .requestMatchers("/admin/**").hasRole("ADMIN")
                   .requestMatchers("/customer/**").hasRole("USER")
                   .requestMatchers("/register/**").permitAll()
+                  .requestMatchers("/register").permitAll()
                   .requestMatchers("/user").authenticated()
                   .requestMatchers("/register","/contactquery").permitAll()
                   .and().formLogin()
