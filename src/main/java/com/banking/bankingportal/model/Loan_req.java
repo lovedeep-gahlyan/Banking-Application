@@ -25,6 +25,24 @@ public class Loan_req {
 	private int loan_term;
 	private boolean approve;
 	private Date req_dt;
+	private String loan_desc;
+	private int loan_rate;
+
+	public int getLoan_rate() {
+		return loan_rate;
+	}
+
+	public void setLoan_rate(int loan_rate) {
+		this.loan_rate = loan_rate;
+	}
+
+	public String getLoan_desc() {
+		return loan_desc;
+	}
+
+	public void setLoan_desc(String loan_desc) {
+		this.loan_desc = loan_desc;
+	}
 
 	@ManyToOne
 	@JoinColumn(name = "customer_id")

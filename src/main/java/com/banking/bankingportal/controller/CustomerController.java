@@ -19,8 +19,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-
-
 import com.banking.bankingportal.model.Customer;
 import com.banking.bankingportal.repo.CustomerRepo;
 
@@ -66,7 +64,6 @@ public ResponseEntity<?> registerUser(@RequestBody Customer customer) {
 }
 		
 		// Get Customer after Auth
-		
 		 @RequestMapping("/user")
 		    public Customer getUserDetailsAfterLogin(Authentication authentication) {
 			 System.out.println(authentication);

@@ -40,6 +40,26 @@ public class Transactions {
 	public void setTrxnDescription(String trxnDescription) {
 		this.trxnDescription = trxnDescription;
 	}
+	
+	
+
+	public Transactions() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Transactions(Transactions trxn) {
+		super();
+		this.transaction_id = trxn.getTransaction_id();
+		this.account_num_sender = trxn.getAccount_num_sender();
+		this.account_num_reciever = trxn.getAccount_num_reciever();
+		this.customer = trxn.getCustomer();
+		this.transaction_dt = trxn.getTransaction_dt();
+		this.transaction_amt = trxn.getTransaction_amt();
+		this.closing_bal_sender = trxn.getClosing_bal_sender();
+		this.closing_bal_reciever = trxn.getClosing_bal_reciever();
+		this.trxnDescription = trxn.getTrxnDescription();
+	}
 
 	public int getClosing_bal_sender() {
 		return closing_bal_sender;
@@ -105,11 +125,13 @@ public class Transactions {
 		this.customer = customer;
 	}
 
+	// customer.getCustomer_id()
+	
 	@Override
 	public String toString() {
 		return "Transactions [transaction_id=" + transaction_id + ", account_num_sender=" + account_num_sender
-				+ ", account_num_reciever=" + account_num_reciever + ", customer_id=" + customer.getCustomer_id()
-				+ ", transaction_dt=" + transaction_dt + ", transaction_amt=" + transaction_amt
+				+ ", account_num_reciever=" + account_num_reciever + ", customer_id=" + 
+				 ", transaction_dt=" + transaction_dt + ", transaction_amt=" + transaction_amt
 				+ ", closing_bal_sender=" + closing_bal_sender + ", closing_bal_reciever=" + closing_bal_reciever
 				+ ", trxnDescription=" + trxnDescription + "]";
 	}

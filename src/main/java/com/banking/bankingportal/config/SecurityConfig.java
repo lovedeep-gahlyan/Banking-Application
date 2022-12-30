@@ -2,8 +2,6 @@ package com.banking.bankingportal.config;
 
 import java.util.Collections;
 
-
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,7 +22,6 @@ import jakarta.servlet.http.HttpServletRequest;
 @Configuration
 public class SecurityConfig {
 
-
      @Bean
         SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
     	 http.securityContext().requireExplicitSave(false)
@@ -40,7 +37,6 @@ public class SecurityConfig {
          config.setMaxAge(3600L);
          return config;
      }
-      
 
           }).and().csrf().ignoringRequestMatchers("/contactquery","/register/**","/customer/**","/admin/**").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
           .and().addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
@@ -59,9 +55,8 @@ public class SecurityConfig {
 
 
 
-       @Bean
-        public PasswordEncoder passwordEncoder() {
-            return new BCryptPasswordEncoder();
-        }
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 }
-
