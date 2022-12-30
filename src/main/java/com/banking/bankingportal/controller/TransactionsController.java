@@ -50,22 +50,23 @@ public class TransactionsController {
 
 		try {
 			
-			System.out.println(customerId);
 			Customer customer = CustomerRepo.findById(customerId).get();
 			
-			System.out.println(trxn.toString());
 			// Get account details of sender and receiver
 			Account_details accrec = AccountRepo.findById(trxn.getAccount_num_reciever());
 			Account_details accsend = AccountRepo.findById(trxn.getAccount_num_sender());
 
 			log.debug("Created sender's and receiver's data objects");
-
+			
 			if (accsend == null) {
 
 				log.error("ERROR! Customer's account details returned 'null' object");
 				return new ResponseEntity<String>("An error occured! Could not find user account", HttpStatus.OK);
 			}
 
+			// Set real time date for transaction
+			trxn.setTransaction_dt(new Date(System.currentTimeMillis()));
+			
 			// Logic to update customer balance
 			int updatedBal = accsend.getAccount_balance() - trxn.getTransaction_amt();
 			if (updatedBal >= 0) {
@@ -73,11 +74,17 @@ public class TransactionsController {
 				accsend.setAccount_balance(updatedBal);
 				if (accrec != null) {
 					
+					Customer reciever = CustomerRepo.findById(accrec.getCustomer().getCustomer_id()).get();
+					
 					int updatedbal_rec = accrec.getAccount_balance() + trxn.getTransaction_amt();
 					trxn.setClosing_bal_reciever(updatedbal_rec);
 					accrec.setAccount_balance(updatedbal_rec);
 					
+					Transactions trxnReciever = new Transactions(trxn);
+					trxnReciever.setCustomer(reciever);
+					
 					AccountRepo.save(accrec);
+					TransactionRepo.save(trxnReciever);
 
 				} else {
 					trxn.setClosing_bal_reciever(-1);
@@ -85,8 +92,6 @@ public class TransactionsController {
 
 				// foreign key value update
 				trxn.setCustomer(customer);
-				// Set real time date for transaction
-				trxn.setTransaction_dt(new Date(System.currentTimeMillis()));
 				
 				// SET update of current transaction in customer
 				//customer.addTransaction(trxn);
