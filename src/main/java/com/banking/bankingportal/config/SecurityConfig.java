@@ -37,7 +37,7 @@ public class SecurityConfig {
          config.setMaxAge(3600L);
          return config;
      }
-      
+
           }).and().csrf().ignoringRequestMatchers("/contactquery","/register/**","/customer/**","/admin/**").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
           .and().addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
           .authorizeHttpRequests()
