@@ -33,6 +33,7 @@ public class BankAppUserPasswordAuthenticationProvider implements Authentication
 	 public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 	        String username = authentication.getName();
 	        String pwd = authentication.getCredentials().toString();
+	      
 	        List<Customer> customer = customerRepo.findByUsername(username);
 	      
 	        if (customer.size() > 0) {

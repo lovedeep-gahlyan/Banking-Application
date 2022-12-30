@@ -4,9 +4,7 @@ package com.banking.bankingportal.model;
 
 import java.util.Set;
 
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

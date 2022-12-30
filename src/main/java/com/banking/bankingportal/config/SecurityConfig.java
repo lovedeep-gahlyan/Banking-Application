@@ -27,21 +27,22 @@ public class SecurityConfig {
 
      @Bean
         SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-          http.securityContext().requireExplicitSave(false)
-          .and().sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
-          .cors().configurationSource(new CorsConfigurationSource() {
-      @Override
-      public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
-          CorsConfiguration config = new CorsConfiguration();
-          config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
-          config.setAllowedMethods(Collections.singletonList("*"));
-          config.setAllowCredentials(true);
-          config.setAllowedHeaders(Collections.singletonList("*"));
-          config.setMaxAge(3600L);
-          return config;
-      }
+    	 http.securityContext().requireExplicitSave(false)
+         .and().sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
+         .cors().configurationSource(new CorsConfigurationSource() {
+     @Override
+     public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+         CorsConfiguration config = new CorsConfiguration();
+         config.setAllowedOrigins(Collections.singletonList("http://localhost:4200"));
+         config.setAllowedMethods(Collections.singletonList("*"));
+         config.setAllowCredentials(true);
+         config.setAllowedHeaders(Collections.singletonList("*"));
+         config.setMaxAge(3600L);
+         return config;
+     }
       
-          }).and().csrf().ignoringRequestMatchers("/contact","/register/**","/customer/**","/admin/**").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+
+          }).and().csrf().ignoringRequestMatchers("/contactquery","/register/**","/customer/**","/admin/**").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
           .and().addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
           .authorizeHttpRequests()
                   .requestMatchers("/admin/**").hasRole("ADMIN")
@@ -49,6 +50,8 @@ public class SecurityConfig {
                   .requestMatchers("/register/**").permitAll()
                   .requestMatchers("/register").permitAll()
                   .requestMatchers("/user").authenticated()
+                  .requestMatchers("/register","/contactquery").permitAll()
+                  .and().formLogin()
           .and().httpBasic();
   return http.build();
       
