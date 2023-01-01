@@ -109,7 +109,7 @@ public class TransactionsController {
 				Transactions id = TransactionRepo.save(trxn);
 				String emailBody = "Dear " + customer.getName() + ", Your account was debited by ₹"
 						+ trxn.getTransaction_amt() + " to Account Number: "
-						+ accrec.getAccount_no() + " on "+trxn.getTransaction_dt()+" \n\nTo check your updated balance log on to our bank portal.";
+						+ trxn.getAccount_num_reciever() + " on "+trxn.getTransaction_dt()+" \n\nTo check your updated balance log on to our bank portal.";
 				emailSenderService.sendEmail(customer.getEmail(), "HMB Transaction", emailBody);
 
 				log.info("Data saved in database");
