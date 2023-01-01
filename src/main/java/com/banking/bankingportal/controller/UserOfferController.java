@@ -34,7 +34,7 @@ public class UserOfferController {
 		return ResponseEntity.created(null).build();
 	}
 	
-	@GetMapping("admin/customer/{customerId}/offers")
+	@GetMapping("/customer/{customerId}/offers")
 	public List<User_offers> getUserOffers(@PathVariable int customerId) {
 		Customer customer = customerRepo.findById(customerId).get();
 		List<User_offers> user_offers = userOffersRepo.findByCustomer(customer);

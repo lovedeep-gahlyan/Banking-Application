@@ -34,7 +34,7 @@ public class ContactQueryController {
 		contactquery.setQuery_dt(new Date(System.currentTimeMillis()));
 		contactQueryRepo.save(contactquery);
 		String email = contactquery.getEmail();
-		emailSenderService.sendEmail(email,"Query Recieved" , "Thanks for reaching to us we will doour best to resolve your problems");
+		emailSenderService.sendEmail(email,"Query Recieved" , "Thanks for reaching to us we will do our best to resolve your problems");
 		return ResponseEntity.created(null).build();
 		
 	}
