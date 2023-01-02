@@ -22,6 +22,7 @@ import com.banking.bankingportal.model.Transactions;
 import com.banking.bankingportal.repo.AccountDetailsRepo;
 import com.banking.bankingportal.repo.CustomerRepo;
 import com.banking.bankingportal.repo.TransactionRepo;
+import com.banking.bankingportal.service.EmailSenderService;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -36,6 +37,9 @@ public class TransactionsController {
 	@Autowired
 	AccountDetailsRepo AccountRepo;
 
+	@Autowired
+	private EmailSenderService emailSenderService;
+
 	private Logger log = LoggerFactory.getLogger(TransactionsController.class);
 
 	@PostMapping(path = "/customer/{customerId}/payment")
@@ -49,15 +53,15 @@ public class TransactionsController {
 		ResponseEntity<String> resp = null;
 
 		try {
-			
+
 			Customer customer = CustomerRepo.findById(customerId).get();
-			
+
 			// Get account details of sender and receiver
 			Account_details accrec = AccountRepo.findById(trxn.getAccount_num_reciever());
 			Account_details accsend = AccountRepo.findById(trxn.getAccount_num_sender());
 
 			log.debug("Created sender's and receiver's data objects");
-			
+
 			if (accsend == null) {
 
 				log.error("ERROR! Customer's account details returned 'null' object");
@@ -66,25 +70,29 @@ public class TransactionsController {
 
 			// Set real time date for transaction
 			trxn.setTransaction_dt(new Date(System.currentTimeMillis()));
-			
+
 			// Logic to update customer balance
 			int updatedBal = accsend.getAccount_balance() - trxn.getTransaction_amt();
 			if (updatedBal >= 0) {
 				trxn.setClosing_bal_sender(updatedBal);
 				accsend.setAccount_balance(updatedBal);
 				if (accrec != null) {
-					
+
 					Customer reciever = CustomerRepo.findById(accrec.getCustomer().getCustomer_id()).get();
-					
+
 					int updatedbal_rec = accrec.getAccount_balance() + trxn.getTransaction_amt();
 					trxn.setClosing_bal_reciever(updatedbal_rec);
 					accrec.setAccount_balance(updatedbal_rec);
-					
+
 					Transactions trxnReciever = new Transactions(trxn);
 					trxnReciever.setCustomer(reciever);
-					
+
 					AccountRepo.save(accrec);
 					TransactionRepo.save(trxnReciever);
+					String emailBody = "Dear " + reciever.getName() + ", Your account was credited by ₹"
+							+ trxnReciever.getTransaction_amt() + " from " + customer.getName() + " [Account Number: "
+							+ accrec.getAccount_no() + "] \n\nTo check your updated balance log on to our bank portal.";
+					emailSenderService.sendEmail(reciever.getEmail(), "HMB Transaction", emailBody);
 
 				} else {
 					trxn.setClosing_bal_reciever(-1);
@@ -92,14 +100,18 @@ public class TransactionsController {
 
 				// foreign key value update
 				trxn.setCustomer(customer);
-				
+
 				// SET update of current transaction in customer
-				//customer.addTransaction(trxn);
+				// customer.addTransaction(trxn);
 
 				// Saving details in database
 				AccountRepo.save(accsend);
 				Transactions id = TransactionRepo.save(trxn);
-				
+				String emailBody = "Dear " + customer.getName() + ", Your account was debited by ₹"
+						+ trxn.getTransaction_amt() + " to Account Number: "
+						+ trxn.getAccount_num_reciever() + " on "+trxn.getTransaction_dt()+" \n\nTo check your updated balance log on to our bank portal.";
+				emailSenderService.sendEmail(customer.getEmail(), "HMB Transaction", emailBody);
+
 				log.info("Data saved in database");
 				log.debug("Saved transaction with id " + id.getTransaction_id());
 
@@ -114,7 +126,7 @@ public class TransactionsController {
 			log.info("Success response constructed");
 
 		} catch (Exception e) {
-			
+
 			log.error("Unable to save transaction details! Problem is :" + e.getMessage());
 			resp = new ResponseEntity<String>("Unable to save transactions details", HttpStatus.INTERNAL_SERVER_ERROR); // 500
 			e.printStackTrace();
@@ -126,24 +138,24 @@ public class TransactionsController {
 
 	@GetMapping(path = "admin/transactions")
 	public ResponseEntity<?> getAllTransactions() {
-		
+
 		log.info("Entered into method 'getAllTransactions' to fetch all transactions details");
-		
+
 		ResponseEntity<?> resp = null;
-		
+
 		try {
-			
+
 			log.info("Creating a list of transactions for all transactions details");
 
 			List<Transactions> list = TransactionRepo.findAll();
-			
+
 			if (list != null && !list.isEmpty()) {
-				
+
 				log.info("Data found with size => " + list.size());
 				resp = new ResponseEntity<List<Transactions>>(list, HttpStatus.OK);
-				
+
 			} else {
-				
+
 				log.info("No transactions  exist! Size : " + list.size());
 				resp = new ResponseEntity<String>("No Transaction history found!", HttpStatus.OK);
 			}
@@ -159,31 +171,31 @@ public class TransactionsController {
 
 	@GetMapping(path = "customer/{customerid}/transaction")
 	public ResponseEntity<?> getTransactionsById(@PathVariable("customerid") int customerId) {
-		
+
 		log.info("Entered into method 'getTransactionsById' to fetch transactions details by Id");
-		
+
 		ResponseEntity<?> resp = null;
-		
+
 		try {
-			
+
 			log.info("Creating a list of transaction for the customer by customer Id");
 
 			Customer customer = CustomerRepo.findById(customerId).get();
 			List<Transactions> list = TransactionRepo.findByCustomer(customer);
-			
+
 			if (list != null && !list.isEmpty()) {
-				
+
 				log.info("Data found with size => " + list.size());
 				resp = new ResponseEntity<List<Transactions>>(list, HttpStatus.OK);
-				
+
 			} else {
-				
+
 				log.info("No transaction history exist! Size : " + list.size());
 				resp = new ResponseEntity<String>("No Transaction History Found", HttpStatus.OK);
-				
+
 			}
 		} catch (Exception e) {
-			
+
 			log.error("Unable to fetch transaction history! Problem is :" + e.getMessage());
 
 			resp = new ResponseEntity<String>("Unable to Fetch Transaction details", HttpStatus.INTERNAL_SERVER_ERROR); // 500
