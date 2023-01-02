@@ -115,7 +115,7 @@ public class TransactionsController {
 				log.info("Data saved in database");
 				log.debug("Saved transaction with id " + id.getTransaction_id());
 
-				body = "Transactions details with id '" + id.getTransaction_id() + "' is saved ";
+				body = "Saved! Transactions details with id '" + id.getTransaction_id() + "' is saved ";
 
 			} else {
 				body = "Amount insufficient for making any transaction possible";
