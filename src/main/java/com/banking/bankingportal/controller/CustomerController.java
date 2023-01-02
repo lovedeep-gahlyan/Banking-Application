@@ -47,6 +47,13 @@ public ResponseEntity<?> registerUser(@RequestBody Customer customer) {
     try {
         String hashPwd = passwordEncoder.encode(customer.getPassword());
         customer.setPassword(hashPwd);
+        String rcode = customer.getRole_code();
+        if (rcode!= null && rcode.equals("admin123")) {
+        	customer.setRole("ROLE_ADMIN");
+        	customer.setRole_code("");
+        } else {
+        	customer.setRole("ROLE_USER");
+        }
         savedCustomer = customerRepo.save(customer);
         if (savedCustomer.getCustomer_id() > 0) {
             int id=savedCustomer.getCustomer_id();

@@ -11,7 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
@@ -38,7 +38,7 @@ public class SecurityConfig {
          return config;
      }
 
-          }).and().csrf().ignoringRequestMatchers("/contactquery","/register/**","/customer/**","/admin/**").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+          }).and().csrf().ignoringRequestMatchers("/contactquery","/register/**","/customer/**","/admin/**", "/logout").csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
           .and().addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
           .authorizeHttpRequests()
                   .requestMatchers("/admin/**").hasRole("ADMIN")
@@ -48,7 +48,18 @@ public class SecurityConfig {
                   .requestMatchers("/user").authenticated()
                   .requestMatchers("/register","/contactquery").permitAll()
                   .and().formLogin()
-          .and().httpBasic();
+                  
+          .and().httpBasic()
+          .and()
+          .logout(logout -> logout
+        		  .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+        		  .clearAuthentication(true)
+        		  .deleteCookies("JSESSIONID")
+        		  .deleteCookies("XSRF-TOKEN")
+        		  .invalidateHttpSession(true)
+        		  .logoutSuccessUrl("/").permitAll()
+           );
+
   return http.build();
       
       }

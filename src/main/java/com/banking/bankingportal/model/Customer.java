@@ -48,9 +48,26 @@ public class Customer {
     
     private String role;
     
+    private String role_code;
+    
     private String employement_status;
 
 	
+	public String getRole_code() {
+		return role_code;
+	}
+
+
+	public void setRole_code(String role_code) {
+		this.role_code = role_code;
+	}
+
+
+	public String getMartial_status() {
+		return martial_status;
+	}
+
+
 	@JsonManagedReference
 	@OneToMany(mappedBy="customer",fetch=FetchType.EAGER)
 	private Set<Payee> payee;
