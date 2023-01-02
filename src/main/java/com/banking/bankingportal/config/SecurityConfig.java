@@ -46,7 +46,7 @@ public class SecurityConfig {
                   .requestMatchers("/register/**").permitAll()
                   .requestMatchers("/register").permitAll()
                   .requestMatchers("/user").authenticated()
-                  .requestMatchers("/register","/contactquery").permitAll()
+                  .requestMatchers("/register","/contactquery","/offersAll").permitAll()
                   .and().formLogin()
           .and().httpBasic();
   return http.build();

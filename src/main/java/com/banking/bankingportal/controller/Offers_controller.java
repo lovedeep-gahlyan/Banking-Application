@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import com.banking.bankingportal.model.Offers;
 import com.banking.bankingportal.repo.OffersRepo;
 
 @RestController	
+@CrossOrigin(origins = "http://localhost:4200")
 public class Offers_controller {
 	
 	private Logger log = LoggerFactory.getLogger(CreditCardController.class);
@@ -28,7 +30,7 @@ public class Offers_controller {
 	private OffersRepo repo;
 
 	
-	@PostMapping("/admin/offers")
+	@PostMapping("/admin/createoffers")
 	public ResponseEntity<String> saveOffer(@RequestBody Offers offer)
 	{
 		log.info("Entered into method with Offers card data to save");
@@ -61,7 +63,7 @@ public class Offers_controller {
 		return resp;
 	}
 	
-	@GetMapping(path="/admin/offers")
+	@GetMapping(path="/offersAll")
 	public ResponseEntity<?> getAllOffers() {
 		log.info("Entered into method to fetch offers data");
 		ResponseEntity<?> resp = null ;
